@@ -2,13 +2,19 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { TRAINERS, Trainer } from '@/lib/trainers';
+import Confetti from './Confetti';
 
 interface Props {
   onSelect: (trainer: Trainer) => void;
 }
 
-function TrainerCard({ trainer, index, onSelect }: { trainer: Trainer; index: number; onSelect: (t: Trainer) => void }) {
+function TrainerCard({ trainer, index, onSelect, onCelebrate }: { trainer: Trainer; index: number; onSelect: (t: Trainer) => void; onCelebrate: () => void }) {
   const [imgError, setImgError] = useState(false);
+
+  const handleSelect = () => {
+    onCelebrate();
+    setTimeout(() => onSelect(trainer), 100);
+  };
   return (
     <motion.button
       initial={{ opacity: 0, y: 30 }}
@@ -16,8 +22,8 @@ function TrainerCard({ trainer, index, onSelect }: { trainer: Trainer; index: nu
       transition={{ delay: index * 0.06 }}
       whileHover={{ y: -8, scale: 1.04 }}
       whileTap={{ scale: 0.96 }}
-      onClick={() => onSelect(trainer)}
-      className="relative rounded-2xl overflow-hidden cursor-pointer text-left p-0 border-0 outline-none"
+      onClick={handleSelect}
+      className="relative rounded-2xl overflow-hidden cursor-pointer text-left p-0 border-0 outline-none group"
       style={{
         background: `linear-gradient(145deg, ${trainer.color}33, #0f0f2e)`,
         border: `1px solid ${trainer.color}55`,
@@ -36,8 +42,8 @@ function TrainerCard({ trainer, index, onSelect }: { trainer: Trainer; index: nu
             onError={() => setImgError(true)}
             animate={{ y: [0, -5, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }}
-            className="h-full object-contain"
-            style={{ imageRendering: 'pixelated', filter: `drop-shadow(0 0 10px ${trainer.color}99)` }}
+            className="h-full object-contain drop-shadow-lg"
+            style={{ filter: `drop-shadow(0 0 15px ${trainer.color}88)` }}
           />
         ) : (
           <motion.div
@@ -70,8 +76,16 @@ function TrainerCard({ trainer, index, onSelect }: { trainer: Trainer; index: nu
 }
 
 export default function TrainerSelect({ onSelect }: Props) {
+  const [showCelebration, setShowCelebration] = useState(false);
+
+  const handleCelebrate = () => {
+    setShowCelebration(true);
+    setTimeout(() => setShowCelebration(false), 2500);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-10 px-4 relative z-10">
+      {showCelebration && <Confetti />}
       <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
         <h2 className="text-4xl md:text-5xl font-black tracking-widest mb-2"
           style={{ background: 'linear-gradient(135deg,#FFD700,#FF6B00)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
@@ -82,7 +96,7 @@ export default function TrainerSelect({ onSelect }: Props) {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full max-w-5xl">
         {TRAINERS.map((trainer, i) => (
-          <TrainerCard key={trainer.id} trainer={trainer} index={i} onSelect={onSelect} />
+          <TrainerCard key={trainer.id} trainer={trainer} index={i} onSelect={onSelect} onCelebrate={handleCelebrate} />
         ))}
       </div>
     </div>

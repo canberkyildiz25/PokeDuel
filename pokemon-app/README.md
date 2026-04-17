@@ -122,6 +122,7 @@ Bu proje aşağıdaki harika açık kaynak projelerden yararlanmıştır:
 - **[Framer Motion](https://github.com/framer/motion)** - Profesyonel animasyon kütüphanesi
 - **[Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)** - Utility-first CSS framework
 - **[TypeScript](https://github.com/microsoft/TypeScript)** - Type-safe JavaScript
+- **[pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css)** - Pokémon kart tasarımı ve CSS animasyon ilhamı
 
 Ayrıca Pokémon TCG'nin ilhamlı oyun tasarımından esinlenilmiştir.
 

@@ -20,7 +20,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Lightning', 'Fire'],
     color: '#F08030', color2: '#F8D030',
     emoji: '⚡',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/ash.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/red.png',
     rival: 'gary',
   },
   {
@@ -31,7 +31,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Water'],
     color: '#6890F0', color2: '#98D8D8',
     emoji: '💧',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/misty.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/misty.png',
     rival: 'giovanni',
   },
   {
@@ -42,7 +42,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Fighting', 'Colorless'],
     color: '#B8A038', color2: '#E0C068',
     emoji: '🪨',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/brock.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/brock.png',
     rival: 'erika',
   },
   {
@@ -53,7 +53,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Colorless', 'Fire', 'Water'],
     color: '#A040A0', color2: '#F85888',
     emoji: '🌟',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/gary.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/blue.png',
     rival: 'ash',
   },
   {
@@ -64,7 +64,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Darkness', 'Metal'],
     color: '#705848', color2: '#705898',
     emoji: '💀',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/giovanni.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/giovanni.png',
     rival: 'ash',
   },
   {
@@ -75,7 +75,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Grass'],
     color: '#78C850', color2: '#A8B820',
     emoji: '🌿',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/erika.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/erika.png',
     rival: 'blaine',
   },
   {
@@ -86,7 +86,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Lightning'],
     color: '#F8D030', color2: '#F08030',
     emoji: '⚡',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/surge.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/surge.png',
     rival: 'misty',
   },
   {
@@ -97,7 +97,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Psychic'],
     color: '#F85888', color2: '#A890F0',
     emoji: '🔮',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/sabrina.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/sabrina.png',
     rival: 'giovanni',
   },
   {
@@ -108,7 +108,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Fire'],
     color: '#F08030', color2: '#C03028',
     emoji: '🔥',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/blaine.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/blaine.png',
     rival: 'misty',
   },
   {
@@ -119,7 +119,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Darkness', 'Psychic'],
     color: '#705898', color2: '#A040A0',
     emoji: '☠️',
-    sprite: 'https://play.pokemonshowdown.com/sprites/trainers/koga.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/koga.png',
     rival: 'erika',
   },
 ];
