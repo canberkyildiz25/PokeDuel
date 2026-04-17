@@ -1,0 +1,565 @@
+@import "tailwindcss";
+
+/* =============================================
+   ROOT VARIABLES  (from pokemon-cards-css)
+   ============================================= */
+:root {
+  --background: #0a0a1a;
+  --foreground: #ffffff;
+
+  /* TCG card dimensions */
+  --card-aspect: 0.718;
+  --card-radius: 4.55% / 3.5%;
+
+  /* Holographic rainbow colors (from source) */
+  --violet: #c929f1;
+  --blue:   #0dbde9;
+  --green:  #21e985;
+  --yellow: #eedf10;
+  --red:    #f80e35;
+
+  /* Sunpillar colors */
+  --sunpillar-1: hsl(2,   100%, 73%);
+  --sunpillar-2: hsl(53,  100%, 69%);
+  --sunpillar-3: hsl(93,  100%, 69%);
+  --sunpillar-4: hsl(176, 100%, 76%);
+  --sunpillar-5: hsl(228, 100%, 74%);
+  --sunpillar-6: hsl(283, 100%, 73%);
+
+  --sunpillar-clr-1: var(--sunpillar-1);
+  --sunpillar-clr-2: var(--sunpillar-2);
+  --sunpillar-clr-3: var(--sunpillar-3);
+  --sunpillar-clr-4: var(--sunpillar-4);
+  --sunpillar-clr-5: var(--sunpillar-5);
+  --sunpillar-clr-6: var(--sunpillar-6);
+
+  /* Card spring defaults */
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --card-scale: 1;
+  --card-opacity: 0;
+  --translate-x: 0px;
+  --translate-y: 0px;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --background-x: 50%;
+  --background-y: 50%;
+  --pointer-from-center: 0;
+  --pointer-from-top: 0;
+  --pointer-from-left: 0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* =============================================
+   ANIMATIONS
+   ============================================= */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+@keyframes glow-gold {
+  0%,100% { box-shadow: 0 0 10px rgba(255,215,0,.4), 0 0 30px rgba(255,215,0,.2); }
+  50%      { box-shadow: 0 0 25px rgba(255,215,0,.8), 0 0 60px rgba(255,215,0,.4); }
+}
+@keyframes text-glow {
+  0%,100% { text-shadow: 0 0 10px rgba(255,215,0,.5); }
+  50%     { text-shadow: 0 0 30px rgba(255,215,0,1), 0 0 60px rgba(255,165,0,.6); }
+}
+@keyframes vs-pulse {
+  0%,100% { transform: scale(1);    opacity: .8; }
+  50%     { transform: scale(1.15); opacity: 1;  }
+}
+@keyframes battle-shake {
+  0%,100% { transform: translateX(0);  }
+  20%     { transform: translateX(-8px);}
+  40%     { transform: translateX( 8px);}
+  60%     { transform: translateX(-5px);}
+  80%     { transform: translateX( 5px);}
+}
+
+.shimmer-bg {
+  background: linear-gradient(90deg,#1a1a2e 25%,#252545 50%,#1a1a2e 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.5s infinite;
+}
+.glow-gold  { animation: glow-gold   2s   ease-in-out infinite; }
+.text-glow  { animation: text-glow   2s   ease-in-out infinite; }
+.vs-pulse   { animation: vs-pulse    1.5s ease-in-out infinite; }
+.battle-shake { animation: battle-shake .5s ease-in-out; }
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: #0f0f1e; }
+::-webkit-scrollbar-thumb { background: #4a4a8a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #7a7aca; }
+
+/* Glass */
+.glass {
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+/* =============================================
+   TYPE BADGE COLORS
+   ============================================= */
+.type-normal   { background:#A8A878; }
+.type-fire     { background:#F08030; }
+.type-water    { background:#6890F0; }
+.type-electric { background:#c8a800; }
+.type-grass    { background:#78C850; }
+.type-ice      { background:#98D8D8; color:#333; }
+.type-fighting { background:#C03028; }
+.type-poison   { background:#A040A0; }
+.type-ground   { background:#E0C068; color:#333; }
+.type-flying   { background:#A890F0; }
+.type-psychic  { background:#F85888; }
+.type-bug      { background:#A8B820; }
+.type-rock     { background:#B8A038; }
+.type-ghost    { background:#705898; }
+.type-dragon   { background:#7038F8; }
+.type-dark     { background:#705848; }
+.type-steel    { background:#B8B8D0; color:#333; }
+.type-fairy    { background:#EE99AC; color:#333; }
+
+/* =============================================
+   POKÉMON TCG CARD  (ported from source)
+   ============================================= */
+
+/* Wrapper — sets perspective */
+.ptcg-card {
+  perspective: 600px;
+  cursor: pointer;
+  aspect-ratio: var(--card-aspect);
+  width: 100%;
+  transform: translate3d(0,0,.01px);
+  transform-style: preserve-3d;
+  will-change: transform, visibility, z-index;
+  outline: 1px solid transparent; /* anti-alias trick from source */
+}
+.ptcg-card.disabled { opacity: .4; cursor: not-allowed; }
+
+/* Glow color per type */
+.ptcg-card.water    { --card-glow: hsl(192,97%,60%); }
+.ptcg-card.fire     { --card-glow: hsl(9,81%,59%);   }
+.ptcg-card.grass    { --card-glow: hsl(96,81%,65%);  }
+.ptcg-card.electric { --card-glow: hsl(54,87%,63%);  }
+.ptcg-card.psychic  { --card-glow: hsl(281,62%,58%); }
+.ptcg-card.fighting { --card-glow: rgb(145,90,39);   }
+.ptcg-card.dragon   { --card-glow: hsl(51,60%,35%);  }
+.ptcg-card.fairy    { --card-glow: hsl(323,100%,89%);}
+.ptcg-card.ghost    { --card-glow: hsl(270,60%,50%); }
+.ptcg-card.dark     { --card-glow: hsl(30,40%,25%);  }
+.ptcg-card.ice      { --card-glow: hsl(192,70%,70%); }
+.ptcg-card         { --card-glow: hsl(175,100%,90%); }
+
+/* Selected glow */
+.ptcg-card.selected .card__rotator {
+  box-shadow:
+    0 0 3px -1px #fff,
+    0 0 3px  1px #FFD700,
+    0 0 12px 2px #FFD700,
+    0px 10px 20px -5px black,
+    0 0 40px -30px #FFD700,
+    0 0 50px -20px #FFD700 !important;
+}
+
+/* Translater — handles scale + translate */
+.card__translater {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  perspective: 600px;
+  will-change: transform, box-shadow;
+  transform-origin: center;
+  transform-style: preserve-3d;
+}
+
+/* Rotator — handles 3-D tilt (key interactive layer) */
+.card__rotator {
+  display: grid;
+  grid-area: 1/1;
+  aspect-ratio: var(--card-aspect);
+  border-radius: var(--card-radius);
+  will-change: transform, box-shadow;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--rotate-x)) rotateX(var(--rotate-y));
+  transition: box-shadow .4s ease, transform .05s linear;
+  pointer-events: auto;
+  outline: 1px solid transparent;
+
+  box-shadow:
+    0 0 3px -1px transparent,
+    0 0 2px  1px transparent,
+    0 0 5px  0px transparent,
+    0px 10px 20px -5px black,
+    0  2px 15px -5px black,
+    0 0 20px 0px transparent;
+}
+
+.card__rotator:hover,
+.card__rotator:focus {
+  box-shadow:
+    0 0 3px -1px white,
+    0 0 3px  1px var(--card-glow, hsl(175,100%,90%)),
+    0 0 12px 2px var(--card-glow, hsl(175,100%,90%)),
+    0px 10px 20px -5px black,
+    0 0 40px -30px var(--card-glow, hsl(175,100%,90%)),
+    0 0 50px -20px var(--card-glow, hsl(175,100%,90%));
+}
+
+/* Only DIRECT children of rotator share the same grid cell */
+.card__rotator > * {
+  width: 100%;
+  display: grid;
+  grid-area: 1/1;
+  aspect-ratio: var(--card-aspect);
+  border-radius: var(--card-radius);
+  transform-style: preserve-3d;
+  pointer-events: none;
+  overflow: hidden;
+  outline: 1px solid transparent;
+}
+
+/* Front face */
+.card__front {
+  position: relative;
+  transform: translate3d(0,0,.01px);
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+/* Solid background layer */
+.card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--card-radius);
+}
+
+/* Card content (sprite + text) — reset grid overrides from .card__rotator > * */
+.card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex !important;
+  flex-direction: column;
+  padding: 6% 8% 6%;
+  pointer-events: none;
+  grid-area: unset !important;
+  aspect-ratio: unset !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+  width: 100%;
+  height: 100%;
+}
+
+.card-sprite-wrap,
+.card-sprite,
+.card-number,
+.card-name,
+.card-types,
+.card-stats,
+.card-stat,
+.stat-track,
+.stat-label,
+.stat-val {
+  display: revert !important;
+  grid-area: unset !important;
+  aspect-ratio: unset !important;
+  border-radius: unset !important;
+  overflow: visible !important;
+  width: unset !important;
+}
+
+.card-number {
+  font-size: .6rem;
+  font-family: monospace;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 2px;
+}
+
+.card-sprite-wrap {
+  position: relative;
+  flex: 1;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  grid-area: unset !important;
+  aspect-ratio: unset !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+}
+
+.card-sprite {
+  position: relative;
+  width: 75%;
+  aspect-ratio: 1;
+  display: block !important;
+  grid-area: unset !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+.sprite-glow {
+  position: absolute;
+  width: 60%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: .3;
+  pointer-events: none;
+}
+
+.card-name {
+  font-weight: 900;
+  font-size: .8rem;
+  color: #fff;
+  text-transform: capitalize;
+  margin: 4px 0 3px;
+  line-height: 1.1;
+}
+
+.card-types {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.card-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .55rem;
+}
+
+.stat-label {
+  width: 22px;
+  text-align: right;
+  color: rgba(255,255,255,.4);
+  font-weight: 700;
+  font-size: .5rem;
+  flex-shrink: 0;
+}
+
+.stat-track {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,.1);
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.stat-val {
+  width: 18px;
+  color: rgba(255,255,255,.5);
+  font-size: .5rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* =============================================
+   SHINE LAYER  (exact from base.css + regular-holo.css)
+   ============================================= */
+
+.card__shine {
+  display: grid;
+  transform: translateZ(1px);
+  overflow: hidden;
+  z-index: 3;
+  background: transparent;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(.85) contrast(2.75) saturate(.65);
+  mix-blend-mode: color-dodge;
+  opacity: var(--card-opacity);
+
+  /* Regular holo shine */
+  --scanlines-space: 1px;
+  --scanlines-light: #666;
+  --scanlines-dark: black;
+  --bars: 3%;
+  --bar-color: hsla(0,0%,70%,1);
+  --bar-bg: hsla(0,0%,0%,1);
+
+  background-image:
+    repeating-linear-gradient(110deg,
+      var(--violet), var(--blue),  var(--green), var(--yellow), var(--red),
+      var(--violet), var(--blue),  var(--green), var(--yellow), var(--red),
+      var(--violet), var(--blue),  var(--green), var(--yellow), var(--red)
+    ),
+    repeating-linear-gradient(90deg,
+      var(--scanlines-dark)  calc(var(--scanlines-space) * 0),
+      var(--scanlines-dark)  calc(var(--scanlines-space) * 2),
+      var(--scanlines-light) calc(var(--scanlines-space) * 2),
+      var(--scanlines-light) calc(var(--scanlines-space) * 4)
+    );
+
+  background-position:
+    calc(((50% - var(--background-x)) * 2.6) + 50%)
+    calc(((50% - var(--background-y)) * 3.5) + 50%),
+    center center;
+
+  background-size: 400% 400%, cover;
+  background-blend-mode: overlay;
+  filter: brightness(1.1) contrast(1.1) saturate(1.2);
+  mix-blend-mode: color-dodge;
+}
+
+/* Shine ::before — bar pattern (hard-light) */
+.card__shine::before {
+  content: "";
+  background-image:
+    repeating-linear-gradient(90deg,
+      var(--bar-bg)    calc(var(--bars)*2),
+      var(--bar-color) calc(var(--bars)*3),
+      var(--bar-bg)    calc(var(--bars)*3.5),
+      var(--bar-color) calc(var(--bars)*4),
+      var(--bar-bg)    calc(var(--bars)*5),
+      var(--bar-bg)    calc(var(--bars)*14)
+    ),
+    repeating-linear-gradient(90deg,
+      var(--bar-bg)    calc(var(--bars)*2),
+      var(--bar-color) calc(var(--bars)*3),
+      var(--bar-bg)    calc(var(--bars)*3.5),
+      var(--bar-color) calc(var(--bars)*4),
+      var(--bar-bg)    calc(var(--bars)*5),
+      var(--bar-bg)    calc(var(--bars)*10)
+    );
+
+  background-position:
+    calc((((50% - var(--background-x)) * 1.65) + 50%) + (var(--background-y) * 0.5))  var(--background-x),
+    calc((((50% - var(--background-x)) * -.9)  + 50%) - (var(--background-y) * 0.75)) var(--background-y);
+
+  background-size: 200% 200%, 200% 200%;
+  background-blend-mode: screen;
+  filter: brightness(1.15) contrast(1.1);
+  mix-blend-mode: hard-light;
+
+  --sunpillar-clr-1: var(--sunpillar-5);
+  --sunpillar-clr-2: var(--sunpillar-6);
+  --sunpillar-clr-3: var(--sunpillar-1);
+  --sunpillar-clr-4: var(--sunpillar-2);
+  --sunpillar-clr-5: var(--sunpillar-3);
+  --sunpillar-clr-6: var(--sunpillar-4);
+  transform: translateZ(1px);
+  border-radius: var(--card-radius);
+  grid-area: 1/1;
+}
+
+/* Shine ::after — radial luminosity */
+.card__shine::after {
+  content: "";
+  background-image:
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0,0%,90%,.8) 0%,
+      hsla(0,0%,78%,.1) 25%,
+      hsl(0,0%,0%)      90%
+    );
+  background-position: center center;
+  background-size: cover;
+  mix-blend-mode: luminosity;
+  filter: brightness(.6) contrast(4);
+
+  --sunpillar-clr-1: var(--sunpillar-6);
+  --sunpillar-clr-2: var(--sunpillar-1);
+  --sunpillar-clr-3: var(--sunpillar-2);
+  --sunpillar-clr-4: var(--sunpillar-3);
+  --sunpillar-clr-5: var(--sunpillar-4);
+  --sunpillar-clr-6: var(--sunpillar-5);
+  transform: translateZ(1.2px);
+  border-radius: var(--card-radius);
+  grid-area: 1/1;
+}
+
+/* =============================================
+   GLARE LAYER  (exact from base.css + regular-holo.css)
+   ============================================= */
+
+.card__glare {
+  transform: translateZ(1.41px);
+  overflow: hidden;
+  z-index: 4;
+
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0,0%,100%,.8)  10%,
+    hsla(0,0%,100%,.65) 20%,
+    hsla(0,0%,0%,.5)    90%
+  );
+  opacity: calc(var(--card-opacity) * .8);
+  mix-blend-mode: overlay;
+  filter: brightness(.8) contrast(1.5);
+}
+
+.card__glare::after {
+  content: "";
+  background-image:
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(180,100%,95%)      5%,
+      hsla(0,0%,39%,.25)    55%,
+      hsla(0,0%,0%,.36)    110%
+    );
+  mix-blend-mode: overlay;
+  filter: brightness(.6) contrast(3);
+  grid-area: 1/1;
+  border-radius: var(--card-radius);
+}
+
+@media screen and (max-width: 900px) {
+  .card__shine { --scanlines-space: .5px; }
+}
+
+/* Card label below card */
+.card-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 6px;
+  gap: 2px;
+}
+.card-label-name {
+  font-size: .75rem;
+  font-weight: 900;
+  color: rgba(255,255,255,.85);
+  text-align: center;
+}
+.card-label-rarity {
+  font-size: .6rem;
+  color: rgba(255,255,255,.35);
+  text-align: center;
+}
+
+/* ptcg-card aspect + label stacked */
+.ptcg-card {
+  display: flex;
+  flex-direction: column;
+}
+.ptcg-card .card__translater {
+  flex: 1;
+}
