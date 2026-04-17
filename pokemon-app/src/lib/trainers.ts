@@ -5,7 +5,6 @@ import brock from '@/assets/trainers/brock.png';
 import gary from '@/assets/trainers/gary.png';
 import giovanni from '@/assets/trainers/giovanni.png';
 import erika from '@/assets/trainers/erika.png';
-import ltsurge from '@/assets/trainers/ltsurge.png';
 import sabrina from '@/assets/trainers/sabrina.png';
 import blaine from '@/assets/trainers/blaine.png';
 import koga from '@/assets/trainers/koga.png';
@@ -98,7 +97,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Lightning'],
     color: '#F8D030', color2: '#F08030',
     emoji: '⚡',
-    sprite: ltsurge,
+    sprite: 'https://api.dicebear.com/9.x/avataaars/svg?seed=surge&scale=100&backgroundColor=fff8c4',
     rival: 'misty',
   },
   {
