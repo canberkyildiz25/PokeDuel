@@ -34,7 +34,7 @@ function TrainerCard({ trainer, index, onSelect, onCelebrate }: { trainer: Train
         style={{ background: `radial-gradient(circle at 50% 30%, ${trainer.color}, transparent 70%)` }} />
 
       {/* Sprite */}
-      <div className="relative flex justify-center items-end pt-4 pb-0" style={{ height: 110 }}>
+      <div className="relative flex justify-center items-center pt-6 pb-2" style={{ height: 140, background: `linear-gradient(135deg, ${trainer.color}22, ${trainer.color2}22)` }}>
         {!imgError ? (
           <motion.img
             src={trainer.sprite}
@@ -42,14 +42,15 @@ function TrainerCard({ trainer, index, onSelect, onCelebrate }: { trainer: Train
             onError={() => setImgError(true)}
             animate={{ y: [0, -5, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }}
-            className="h-full object-contain drop-shadow-lg"
-            style={{ filter: `drop-shadow(0 0 15px ${trainer.color}88)` }}
+            className="h-full w-full object-contain p-2"
+            style={{ filter: `drop-shadow(0 4px 12px ${trainer.color}99)` }}
           />
         ) : (
           <motion.div
-            animate={{ y: [0, -5, 0] }}
+            animate={{ y: [0, -5, 0], scale: [1, 1.05, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }}
-            className="text-5xl"
+            className="text-7xl"
+            style={{ textShadow: `0 0 20px ${trainer.color}88` }}
           >
             {trainer.emoji}
           </motion.div>
