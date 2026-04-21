@@ -69,13 +69,25 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
   const [dmgDisplay, setDmgDisplay] = useState<{ side: 'player'|'ai'; value: number; effective: boolean } | null>(null);
   const [autoMode, setAutoMode] = useState(false);
 
-  // Supporter effect state (refs for closure safety)
+  // Player supporter state
   const [supporterUsed, setSupporterUsed] = useState(false);
   const [supporterEffectLabel, setSupporterEffectLabel] = useState<string | null>(null);
   const blockNextAiRef   = useRef(false);
   const doubleTurnRef    = useRef(false);
   const damageBoostRef   = useRef<{ types: string[]; bonus: number } | null>(null);
   const shieldActiveRef  = useRef(false);
+
+  // AI supporter state
+  const [aiSupporter] = useState<TcgCard>(() => {
+    const supporters = ALL_CARDS.filter(c => c.supertype === 'Trainer' && c.subtypes?.includes('Supporter'));
+    return supporters[Math.floor(Math.random() * supporters.length)];
+  });
+  const [aiSupporterUsed, setAiSupporterUsed] = useState(false);
+  const [aiSupporterLabel, setAiSupporterLabel] = useState<string | null>(null);
+  const aiBlockNextPlayerRef = useRef(false);
+  const aiDoubleTurnRef      = useRef(false);
+  const aiDamageBoostRef     = useRef<{ types: string[]; bonus: number } | null>(null);
+  const aiShieldRef          = useRef(false);
 
   const autoRef = useRef(autoMode);
   autoRef.current = autoMode;
@@ -179,11 +191,24 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
   // ── Battle phases ──────────────────────────────────────────────────────────
   useEffect(() => {
     if (state.phase === 'playerAttack') {
+      // Check if player attack is blocked by AI supporter
+      if (aiBlockNextPlayerRef.current) {
+        aiBlockNextPlayerRef.current = false;
+        setAiSupporterLabel(null);
+        setTimeout(() => {
+          setState(prev => ({
+            ...prev, phase: 'aiAttack',
+            log: ['🛡️ Rakip saldırını engelledi!', ...prev.log].slice(0,6),
+          }));
+        }, 400);
+        return;
+      }
+
       const attacker = state.playerTeam[state.playerActive];
       const defender = state.aiTeam[state.aiActive];
       const { damage: baseDmg, effective } = calcDamage(attacker, defender, location);
 
-      // Apply damage boost if applicable
+      // Apply player damage boost
       let damage = baseDmg;
       const boost = damageBoostRef.current;
       if (boost) {
@@ -191,6 +216,13 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
         if (boost.types.some(t => atkTypes.includes(t))) damage += boost.bonus;
         damageBoostRef.current = null;
         setSupporterEffectLabel(null);
+      }
+
+      // Apply AI shield
+      if (aiShieldRef.current) {
+        damage = Math.floor(damage / 2);
+        aiShieldRef.current = false;
+        setAiSupporterLabel(null);
       }
 
       setAttackingPlayer(true);
@@ -256,11 +288,79 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
         return;
       }
 
+      // AI uses its supporter if: not used yet AND (HP < 50% OR round >= 3)
+      const aiActive = state.aiTeam[state.aiActive];
+      const aiHpPct = aiActive.currentHp / aiActive.maxHp;
+      if (!aiSupporterUsed && (aiHpPct < 0.5 || state.round >= 3)) {
+        setAiSupporterUsed(true);
+        const sid = aiSupporter.id;
+        setState(prev => {
+          const attacker = prev.aiTeam[prev.aiActive];
+          switch (sid) {
+            case 'swsh9-132': { // Boss's Orders — force player to switch
+              const next = nextActivePokemon(prev.playerTeam, prev.playerActive);
+              if (next === -1) return { ...prev, log: [`👔 ${aiTrainer.name}: Patron Emirleri! Ama senin başka kartın yok.`, ...prev.log].slice(0,6) };
+              return { ...prev, playerActive: next, log: [`👔 ${aiTrainer.name}: Patron Emirleri! Kartını değiştirmek zorunda kaldın!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh45-60': { // Professor's Research — heal AI 40
+              const aiTeam = prev.aiTeam.map((p,i) => i === prev.aiActive ? { ...p, currentHp: Math.min(p.maxHp, p.currentHp + 40) } : p);
+              return { ...prev, aiTeam, log: [`📚 ${aiTrainer.name}: Profesör'ün Araştırması! +40 HP!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh6-196': { // Peonia — block next player attack
+              aiBlockNextPlayerRef.current = true;
+              setAiSupporterLabel('🛡️ Oyuncu saldırısı engellendi');
+              return { ...prev, log: [`🔮 ${aiTrainer.name}: Peonia! Senin saldırın engellendi!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh9-167': { // Barry — AI double attack
+              aiDoubleTurnRef.current = true;
+              setAiSupporterLabel('⚡ Rakip çift saldırı hazır');
+              return { ...prev, log: [`⚡ ${aiTrainer.name}: Barry! Bu tur iki kez saldıracak!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh1-200': { // Marnie — both take 20 dmg
+              const aiTeam = prev.aiTeam.map((p,i) => i === prev.aiActive ? { ...p, currentHp: Math.max(0, p.currentHp - 20) } : p);
+              const playerTeam = prev.playerTeam.map((p,i) => i === prev.playerActive ? { ...p, currentHp: Math.max(0, p.currentHp - 20) } : p);
+              return { ...prev, aiTeam, playerTeam, log: [`🖤 ${aiTrainer.name}: Marnie! Her iki taraf 20 hasar aldı!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh11tg-TG27': { // Nessa — AI Water +30
+              aiDamageBoostRef.current = { types: ['Water'], bonus: 30 };
+              setAiSupporterLabel('💧 Rakip Su güç artışı aktif');
+              return { ...prev, log: [`🌊 ${aiTrainer.name}: Nessa! Su kartlarına +30 hasar!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh12tg-TG26': { // Prof. Burnet — AI shield
+              aiShieldRef.current = true;
+              setAiSupporterLabel('🛡️ Rakip kalkan aktif');
+              return { ...prev, log: [`🌺 ${aiTrainer.name}: Prof. Burnet! Bir sonraki hasarı yarıya indirecek!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh11tg-TG26': { // Kabu — AI Fire +30
+              aiDamageBoostRef.current = { types: ['Fire'], bonus: 30 };
+              setAiSupporterLabel('🔥 Rakip Ateş güç artışı aktif');
+              return { ...prev, log: [`🔥 ${aiTrainer.name}: Kabu! Ateş kartlarına +30 hasar!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh10-204': { // Irida — heal all AI 20
+              const aiTeam = prev.aiTeam.map(p => !p.fainted ? { ...p, currentHp: Math.min(p.maxHp, p.currentHp + 20) } : p);
+              return { ...prev, aiTeam, log: [`❄️ ${aiTrainer.name}: Irida! Tüm kartlar 20 HP kazandı!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh12-205': { // Furisode Girl — random heal
+              const heal = Math.floor(Math.random() * 40) + 10;
+              const aiTeam = prev.aiTeam.map((p,i) => i === prev.aiActive ? { ...p, currentHp: Math.min(p.maxHp, p.currentHp + heal) } : p);
+              return { ...prev, aiTeam, log: [`🌸 ${aiTrainer.name}: Furisode Girl! +${heal} HP!`, ...prev.log].slice(0,6) };
+            }
+            case 'swsh1-173': { // Poké Kid — heal AI 30
+              const aiTeam = prev.aiTeam.map((p,i) => i === prev.aiActive ? { ...p, currentHp: Math.min(p.maxHp, p.currentHp + 30) } : p);
+              return { ...prev, aiTeam, log: [`⭐ ${aiTrainer.name}: Poké Kid! +30 HP!`, ...prev.log].slice(0,6) };
+            }
+            default:
+              return { ...prev, log: [`🃏 ${aiTrainer.name} bir supporter kullandı!`, ...prev.log].slice(0,6) };
+          }
+          void attacker;
+        });
+      }
+
       const attacker = state.aiTeam[state.aiActive];
       const defender = state.playerTeam[state.playerActive];
       const { damage: baseDmg, effective } = calcDamage(attacker, defender, location);
 
-      // Apply shield
+      // Apply player shield
       let damage = baseDmg;
       if (shieldActiveRef.current) {
         damage = Math.floor(damage / 2);
@@ -268,11 +368,22 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
         setSupporterEffectLabel(null);
       }
 
+      // Apply AI damage boost
+      const aiBoost = aiDamageBoostRef.current;
+      if (aiBoost) {
+        const atkTypes = attacker.card.types ?? ['Colorless'];
+        if (aiBoost.types.some(t => atkTypes.includes(t))) damage += aiBoost.bonus;
+        aiDamageBoostRef.current = null;
+        setAiSupporterLabel(null);
+      }
+
       setTimeout(() => {
         setAttackingAi(true);
         setTimeout(() => {
           setAttackingAi(false);
           setDmgDisplay({ side: 'player', value: damage, effective });
+
+          const usedAiDouble = aiDoubleTurnRef.current;
 
           setState(prev => {
             const playerTeam = prev.playerTeam.map((p,i) =>
@@ -283,15 +394,25 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
             const nextPlayer = fainted ? nextActivePokemon(playerTeam, prev.playerActive) : prev.playerActive;
             const playerDefeated = isTeamDefeated(playerTeam);
 
+            let nextPhase: BattleState['phase'];
+            if (playerDefeated) nextPhase = 'end';
+            else if (usedAiDouble) nextPhase = 'aiAttack';
+            else nextPhase = 'idle';
+
             return {
               ...prev, playerTeam,
               playerActive: nextPlayer === -1 ? prev.playerActive : nextPlayer,
-              phase: playerDefeated ? 'end' : 'idle',
+              phase: nextPhase,
               winner: playerDefeated ? 'ai' : null,
-              round: prev.round + 1,
+              round: usedAiDouble ? prev.round : prev.round + 1,
               log: [`${attacker.card.name} → ${damage} hasar${effective ? ' (Etkili!)' : ''}`, ...prev.log].slice(0,6),
             };
           });
+
+          if (usedAiDouble) {
+            aiDoubleTurnRef.current = false;
+            setAiSupporterLabel(null);
+          }
 
           setTimeout(() => setDmgDisplay(null), 800);
         }, 500);
@@ -343,12 +464,30 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
         {/* AI side */}
         <div className="flex items-start gap-4 rounded-2xl p-4 relative"
           style={{ background: 'rgba(0,0,0,0.5)', border: `1px solid ${aiTrainer.color}33` }}>
-          <div className="flex flex-col items-center gap-1 shrink-0">
-            <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
-              style={{ background: `linear-gradient(135deg,${aiTrainer.color}44,${aiTrainer.color2}44)`, border: `2px solid ${aiTrainer.color}66` }}>
-              {aiTrainer.emoji}
+          <div className="flex items-start gap-2 shrink-0">
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-14 h-16 rounded-xl overflow-hidden flex items-center justify-center"
+                style={{ background: `linear-gradient(135deg,${aiTrainer.color}33,${aiTrainer.color2}22)`, border: `2px solid ${aiTrainer.color}66` }}>
+                <img src={aiTrainer.sprite} alt={aiTrainer.name} className="w-full h-full object-contain"
+                  style={{ filter: `drop-shadow(0 2px 6px ${aiTrainer.color}99)` }} />
+              </div>
+              <span className="text-[10px] font-black text-white/80 text-center leading-tight" style={{maxWidth:56}}>{aiTrainer.name}</span>
             </div>
-            <span className="text-[10px] font-black text-white/80 text-center leading-tight" style={{maxWidth:56}}>{aiTrainer.name}</span>
+            {/* AI Supporter card */}
+            <div className="flex flex-col items-center gap-0.5">
+              <div className={`relative rounded-lg overflow-hidden transition-all ${aiSupporterUsed ? 'opacity-40 grayscale' : ''}`}
+                style={{ width: 36, aspectRatio: '0.718' }}>
+                <Image src={aiSupporter.images.small} alt={aiSupporter.name} fill className="object-cover" sizes="36px" />
+                {aiSupporterUsed && (
+                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                    <span className="text-white/60 text-[6px] font-black text-center leading-tight px-0.5">KULLANILDI</span>
+                  </div>
+                )}
+              </div>
+              {aiSupporterLabel && (
+                <span className="text-[7px] text-yellow-400 font-bold text-center leading-tight animate-pulse" style={{maxWidth:40}}>{aiSupporterLabel}</span>
+              )}
+            </div>
           </div>
 
           <div className="flex-1 flex flex-col gap-2">
@@ -446,9 +585,10 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
           </AnimatePresence>
 
           <div className="flex flex-col items-center gap-1 shrink-0">
-            <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
-              style={{ background: `linear-gradient(135deg,${playerTrainer.color}44,${playerTrainer.color2}44)`, border: `2px solid ${playerTrainer.color}66` }}>
-              {playerTrainer.emoji}
+            <div className="w-14 h-16 rounded-xl overflow-hidden flex items-center justify-center"
+              style={{ background: `linear-gradient(135deg,${playerTrainer.color}33,${playerTrainer.color2}22)`, border: `2px solid ${playerTrainer.color}66` }}>
+              <img src={playerTrainer.sprite} alt={playerTrainer.name} className="w-full h-full object-contain"
+                style={{ filter: `drop-shadow(0 2px 6px ${playerTrainer.color}99)` }} />
             </div>
             <span className="text-[10px] font-black text-white/80 text-center leading-tight" style={{maxWidth:56}}>{playerTrainer.name}</span>
           </div>

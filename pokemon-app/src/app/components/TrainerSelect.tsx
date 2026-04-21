@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { TRAINERS, Trainer } from '@/lib/trainers';
 import Confetti from './Confetti';
 
@@ -35,22 +34,17 @@ function TrainerCard({ trainer, index, onSelect, onCelebrate }: { trainer: Train
         style={{ background: `radial-gradient(circle at 50% 30%, ${trainer.color}, transparent 70%)` }} />
 
       {/* Sprite */}
-      <div className="relative flex justify-center items-center pt-6 pb-2 overflow-hidden" style={{ height: 140, background: `linear-gradient(135deg, ${trainer.color}22, ${trainer.color2}22)` }}>
-        {!imgError && typeof trainer.sprite !== 'string' ? (
-          <motion.div
-            className="relative w-full h-full"
+      <div className="relative flex justify-center items-center pt-2 pb-2 overflow-hidden" style={{ height: 140, background: `linear-gradient(135deg, ${trainer.color}22, ${trainer.color2}22)` }}>
+        {!imgError ? (
+          <motion.img
+            src={trainer.sprite}
+            alt={trainer.name}
+            className="h-full w-full object-contain"
+            style={{ filter: `drop-shadow(0 4px 16px ${trainer.color}cc)` }}
             animate={{ y: [0, -5, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }}
-          >
-            <Image
-              src={trainer.sprite}
-              alt={trainer.name}
-              fill
-              className="object-contain p-2"
-              style={{ filter: `drop-shadow(0 4px 12px ${trainer.color}99)` }}
-              onError={() => setImgError(true)}
-            />
-          </motion.div>
+            onError={() => setImgError(true)}
+          />
         ) : (
           <motion.div
             animate={{ y: [0, -5, 0], scale: [1, 1.05, 1] }}

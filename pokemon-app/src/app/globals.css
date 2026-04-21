@@ -407,9 +407,9 @@ body {
 
   background-image:
     repeating-linear-gradient(110deg,
-      var(--violet), var(--blue),  var(--green), var(--yellow), var(--red),
-      var(--violet), var(--blue),  var(--green), var(--yellow), var(--red),
-      var(--violet), var(--blue),  var(--green), var(--yellow), var(--red)
+      var(--violet), var(--blue), var(--green), var(--yellow), var(--red),
+      var(--violet), var(--blue), var(--green), var(--yellow), var(--red),
+      var(--violet), var(--blue), var(--green), var(--yellow), var(--red)
     ),
     repeating-linear-gradient(90deg,
       var(--scanlines-dark)  calc(var(--scanlines-space) * 0),
@@ -419,8 +419,7 @@ body {
     );
 
   background-position:
-    calc(((50% - var(--background-x)) * 2.6) + 50%)
-    calc(((50% - var(--background-y)) * 3.5) + 50%),
+    calc(((50% - var(--background-x)) * 2.6) + 50%) calc(((50% - var(--background-y)) * 3.5) + 50%),
     center center;
 
   background-size: 400% 400%, cover;
@@ -506,11 +505,12 @@ body {
   z-index: 4;
 
   background-image: radial-gradient(
-    farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0,0%,100%,.8)  10%,
-    hsla(0,0%,100%,.65) 20%,
-    hsla(0,0%,0%,.5)    90%
+    farthest-corner ellipse at var(--pointer-x) var(--pointer-y),
+    hsla(0,0%,100%,.8)  5%,
+    hsla(0,0%,100%,.55) 40%,
+    hsla(0,0%,0%,.4)    100%
   );
+  background-size: 100% 100%;
   opacity: calc(var(--card-opacity) * .8);
   mix-blend-mode: overlay;
   filter: brightness(.8) contrast(1.5);
