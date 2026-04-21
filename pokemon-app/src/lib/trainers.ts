@@ -1,14 +1,3 @@
-import { StaticImageData } from 'next/image';
-import ash from '@/assets/trainers/ash.png';
-import misty from '@/assets/trainers/misty.png';
-import brock from '@/assets/trainers/brock.png';
-import gary from '@/assets/trainers/gary.png';
-import giovanni from '@/assets/trainers/giovanni.png';
-import erika from '@/assets/trainers/erika.png';
-import sabrina from '@/assets/trainers/sabrina.png';
-import blaine from '@/assets/trainers/blaine.png';
-import koga from '@/assets/trainers/koga.png';
-
 export interface Trainer {
   id: string;
   name: string;
@@ -18,7 +7,7 @@ export interface Trainer {
   color: string;
   color2: string;
   emoji: string;
-  sprite: string | StaticImageData;
+  sprite: string;
   rival: string;
 }
 
@@ -31,7 +20,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Lightning', 'Fire'],
     color: '#F08030', color2: '#F8D030',
     emoji: '⚡',
-    sprite: ash,
+    sprite: '/trainers/ash.png',
     rival: 'gary',
   },
   {
@@ -42,7 +31,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Water'],
     color: '#6890F0', color2: '#98D8D8',
     emoji: '💧',
-    sprite: misty,
+    sprite: '/trainers/misty.png',
     rival: 'giovanni',
   },
   {
@@ -53,7 +42,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Fighting', 'Colorless'],
     color: '#B8A038', color2: '#E0C068',
     emoji: '🪨',
-    sprite: brock,
+    sprite: '/trainers/brock.png',
     rival: 'erika',
   },
   {
@@ -64,7 +53,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Colorless', 'Fire', 'Water'],
     color: '#A040A0', color2: '#F85888',
     emoji: '🌟',
-    sprite: gary,
+    sprite: '/trainers/gary.png',
     rival: 'ash',
   },
   {
@@ -75,7 +64,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Darkness', 'Metal'],
     color: '#705848', color2: '#705898',
     emoji: '💀',
-    sprite: giovanni,
+    sprite: '/trainers/giovanni.png',
     rival: 'ash',
   },
   {
@@ -86,7 +75,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Grass'],
     color: '#78C850', color2: '#A8B820',
     emoji: '🌿',
-    sprite: erika,
+    sprite: '/trainers/erika.png',
     rival: 'blaine',
   },
   {
@@ -97,7 +86,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Lightning'],
     color: '#F8D030', color2: '#F08030',
     emoji: '⚡',
-    sprite: 'https://api.dicebear.com/9.x/avataaars/svg?seed=surge&scale=100&backgroundColor=fff8c4',
+    sprite: '/trainers/surge.png',
     rival: 'misty',
   },
   {
@@ -108,7 +97,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Psychic'],
     color: '#F85888', color2: '#A890F0',
     emoji: '🔮',
-    sprite: sabrina,
+    sprite: '/trainers/sabrina.png',
     rival: 'giovanni',
   },
   {
@@ -119,7 +108,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Fire'],
     color: '#F08030', color2: '#C03028',
     emoji: '🔥',
-    sprite: blaine,
+    sprite: '/trainers/blaine.png',
     rival: 'misty',
   },
   {
@@ -130,7 +119,7 @@ export const TRAINERS: Trainer[] = [
     specialty: ['Darkness', 'Psychic'],
     color: '#705898', color2: '#A040A0',
     emoji: '☠️',
-    sprite: koga,
+    sprite: '/trainers/koga.png',
     rival: 'erika',
   },
 ];

@@ -72,7 +72,6 @@ export default function PokemonCard({ card, selected, selectable, slot, onClick 
   }, [applyVars]);
 
   const interact = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    if (!selectable && !selected) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const pct  = {
       x: clamp(round((100 / rect.width)  * (e.clientX - rect.left))),
@@ -153,11 +152,11 @@ export default function PokemonCard({ card, selected, selectable, slot, onClick 
               sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 16vw"
               priority={false}
             />
-
-            {/* Holographic shine + glare on top */}
-            <div className="card__shine" />
-            <div className="card__glare" />
           </div>
+
+          {/* Shine + glare as direct rotator children so .card__rotator > * makes them full-card */}
+          <div className="card__shine" />
+          <div className="card__glare" />
         </div>
       </div>
 
