@@ -192,6 +192,13 @@ export default function DeckSelect({ trainer, onConfirm, onBack }: Props) {
   const [deck, setDeck] = useState<TcgCard[]>([]);
   const [supporter, setSupporter] = useState<TcgCard | null>(null);
   const [search, setSearch] = useState('');
+  const supporterRef = useRef<HTMLDivElement>(null);
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowIntro(false), 2200);
+    return () => clearTimeout(t);
+  }, []);
 
   const pool = ALL_CARDS.filter(c =>
     c.supertype !== 'Trainer' &&
@@ -206,7 +213,11 @@ export default function DeckSelect({ trainer, onConfirm, onBack }: Props) {
     setDeck(prev => {
       if (prev.find(d => d.id === c.id)) return prev.filter(d => d.id !== c.id);
       if (prev.length >= DECK_SIZE) return prev;
-      return [...prev, c];
+      const next = [...prev, c];
+      if (next.length === DECK_SIZE) {
+        setTimeout(() => supporterRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 350);
+      }
+      return next;
     });
   };
 
@@ -316,7 +327,7 @@ export default function DeckSelect({ trainer, onConfirm, onBack }: Props) {
       </div>
 
       {/* Supporter card section */}
-      <div className="px-4 pt-4 pb-10 max-w-6xl mx-auto w-full">
+      <div ref={supporterRef} className="px-4 pt-4 pb-10 max-w-6xl mx-auto w-full">
         <div className="text-yellow-400/80 text-xs font-bold uppercase tracking-widest mb-4">
           ✨ Supporter Kartı — 1 seç (savaşta bir kez kullanılabilir)
         </div>
@@ -331,6 +342,86 @@ export default function DeckSelect({ trainer, onConfirm, onBack }: Props) {
           ))}
         </div>
       </div>
+
+      {/* Intro animation */}
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -30 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none"
+          >
+            <motion.div
+              animate={{ scale: [1, 1.04, 1] }}
+              transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
+              className="flex flex-col items-center gap-3 px-10 py-6 rounded-3xl text-center"
+              style={{
+                background: `linear-gradient(135deg, ${trainer.color}22, ${trainer.color2}22)`,
+                border: `1px solid ${trainer.color}55`,
+                backdropFilter: 'blur(16px)',
+                boxShadow: `0 0 60px ${trainer.color}44`,
+              }}
+            >
+              <motion.span
+                animate={{ rotate: [-8, 8, -8] }}
+                transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+                className="text-5xl"
+              >
+                {trainer.emoji}
+              </motion.span>
+              <div className="text-2xl font-black text-white tracking-wide">Kartlarını Seç!</div>
+              <div className="text-sm font-bold" style={{ color: trainer.color }}>
+                {DECK_SIZE} Pokémon + 1 Supporter
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Fixed step hint */}
+      <AnimatePresence mode="wait">
+        {!canConfirm && (
+          <motion.div
+            key={deck.length < DECK_SIZE ? 'step1' : 'step2'}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 24 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-3 rounded-full text-sm font-black shadow-2xl pointer-events-none"
+            style={{
+              background: deck.length < DECK_SIZE
+                ? `linear-gradient(135deg, ${trainer.color}cc, ${trainer.color2}cc)`
+                : 'linear-gradient(135deg, rgba(255,215,0,0.9), rgba(255,140,0,0.9))',
+              color: '#000',
+              boxShadow: deck.length < DECK_SIZE
+                ? `0 0 30px ${trainer.color}66`
+                : '0 0 30px rgba(255,215,0,0.5)',
+              backdropFilter: 'blur(8px)',
+            }}
+          >
+            {deck.length < DECK_SIZE ? (
+              <>
+                <span>⚔️</span>
+                <span>{deck.length}/{DECK_SIZE} Pokémon kartı seç</span>
+                <span style={{ opacity: 0.6 }}>{'●'.repeat(deck.length)}{'○'.repeat(DECK_SIZE - deck.length)}</span>
+              </>
+            ) : (
+              <>
+                <span>✨</span>
+                <span>Supporter kartı seç!</span>
+                <motion.span
+                  animate={{ y: [0, 5, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  ↓
+                </motion.span>
+              </>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

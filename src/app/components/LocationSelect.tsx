@@ -42,10 +42,10 @@ export default function LocationSelect({ trainer, onSelect, onBack }: Props) {
             whileHover={{ y: -10, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => onSelect(loc)}
-            className="relative rounded-2xl overflow-hidden cursor-pointer text-left h-52 border-0 outline-none"
+            className="relative rounded-2xl overflow-hidden cursor-pointer text-left h-52 border-0 outline-none bg-black"
             style={{
-              border: `1px solid ${loc.accent}44`,
-              boxShadow: `0 4px 30px ${loc.accent}22`,
+              appearance: 'none',
+              boxShadow: `inset 0 0 0 1px ${loc.accent}44, 0 4px 30px ${loc.accent}22`,
             }}
           >
             {/* Background image with gradient fallback */}
@@ -54,8 +54,8 @@ export default function LocationSelect({ trainer, onSelect, onBack }: Props) {
               style={{ background: loc.bg }}
             />
             <div
-              className="absolute inset-0 bg-center bg-cover bg-no-repeat"
-              style={{ backgroundImage: `url(${loc.image})` }}
+              className="absolute bg-center bg-cover bg-no-repeat"
+              style={{ backgroundImage: `url(${loc.image})`, inset: '-2px' }}
             />
             {/* Dark overlay so text is readable */}
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)' }} />
