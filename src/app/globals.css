@@ -185,6 +185,7 @@ body {
 
 /* Rotator — handles 3-D tilt (key interactive layer) */
 .card__rotator {
+  position: relative;
   display: grid;
   grid-area: 1/1;
   aspect-ratio: var(--card-aspect);
@@ -385,7 +386,20 @@ body {
    SHINE LAYER  (exact from base.css + regular-holo.css)
    ============================================= */
 
+.card__shine,
+.card__glare,
+.card__front .card__shine,
+.card__front .card__glare {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: unset;
+  grid-area: unset;
+}
+
 .card__shine {
+  position: relative;
   display: grid;
   transform: translateZ(1px);
   overflow: hidden;
@@ -464,9 +478,10 @@ body {
   --sunpillar-clr-4: var(--sunpillar-2);
   --sunpillar-clr-5: var(--sunpillar-3);
   --sunpillar-clr-6: var(--sunpillar-4);
+  position: absolute;
+  inset: 0;
   transform: translateZ(1px);
   border-radius: var(--card-radius);
-  grid-area: 1/1;
 }
 
 /* Shine ::after — radial luminosity */
@@ -490,9 +505,10 @@ body {
   --sunpillar-clr-4: var(--sunpillar-3);
   --sunpillar-clr-5: var(--sunpillar-4);
   --sunpillar-clr-6: var(--sunpillar-5);
+  position: absolute;
+  inset: 0;
   transform: translateZ(1.2px);
   border-radius: var(--card-radius);
-  grid-area: 1/1;
 }
 
 /* =============================================

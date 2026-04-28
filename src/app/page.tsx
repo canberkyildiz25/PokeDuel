@@ -26,6 +26,35 @@ export default function Home() {
   const [supporter, setSupporter]   = useState<TcgCard | null>(null);
   const [location, setLocation]     = useState<Location | null>(null);
 
+  const audioElRef = useRef<HTMLAudioElement | null>(null);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+
+  useEffect(() => {
+    const a = new Audio('https://archive.org/download/PokemonThemeSong/Pok%C3%A9mon%20Theme%20Song.mp3');
+    a.loop = true;
+    a.volume = 0.45;
+    audioElRef.current = a;
+    return () => { a.pause(); a.src = ''; };
+  }, []);
+
+  const startMusic = () => {
+    const a = audioElRef.current;
+    if (!a) return;
+    a.play().then(() => setMusicPlaying(true)).catch(() => {});
+  };
+
+  const toggleMusic = () => {
+    const a = audioElRef.current;
+    if (!a) return;
+    if (musicPlaying) {
+      a.pause();
+      setMusicPlaying(false);
+    } else {
+      a.play().catch(() => {});
+      setMusicPlaying(true);
+    }
+  };
+
   const rival = trainer ? getRival(trainer.id) : null;
 
   // ── Browser back-button support ──────────────────────────────────────────
@@ -64,9 +93,12 @@ export default function Home() {
     <div className="min-h-screen relative"
       style={{ background: screen === 'battle' ? 'transparent' : 'linear-gradient(135deg,#0a0a1a 0%,#0f0f2e 50%,#0a0a1a 100%)' }}>
       {screen !== 'battle' && <StarField />}
-      <AudioPlayer />
+      <AudioPlayer playing={musicPlaying} onToggle={toggleMusic} />
 
-      <SplashScreen visible={screen === 'splash'} onEnter={() => setScreen('trainer')} />
+      <SplashScreen
+        visible={screen === 'splash'}
+        onEnter={() => { startMusic(); setScreen('trainer'); }}
+      />
 
       {screen !== 'splash' && screen !== 'battle' && (
         <motion.div

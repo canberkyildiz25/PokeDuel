@@ -48,7 +48,9 @@ function HoloCard({ card, selected, selectable, onClick }: {
 
   const applyVars = useCallback(() => {
     const el = rotRef.current; if (!el) return;
-    sR.current.tick(); sG.current.tick(); sB.current.tick();
+    const mr = sR.current.tick();
+    const mg = sG.current.tick();
+    const mb = sB.current.tick();
     const r = sR.current.get(), g = sG.current.get(), b = sB.current.get();
     const fc = clamp(Math.sqrt((g.y-50)**2+(g.x-50)**2)/50,0,1);
     el.style.setProperty('--pointer-x',`${g.x.toFixed(2)}%`);
@@ -59,7 +61,7 @@ function HoloCard({ card, selected, selectable, onClick }: {
     el.style.setProperty('--rotate-y',`${r.y.toFixed(2)}deg`);
     el.style.setProperty('--background-x',`${b.x.toFixed(2)}%`);
     el.style.setProperty('--background-y',`${b.y.toFixed(2)}%`);
-    if(sR.current.tick()||sG.current.tick()||sB.current.tick()) raf.current=requestAnimationFrame(applyVars);
+    if(mr||mg||mb) raf.current=requestAnimationFrame(applyVars);
     else raf.current=null;
   },[]);
 
@@ -102,8 +104,7 @@ function HoloCard({ card, selected, selectable, onClick }: {
               style={{pointerEvents:'none'}}>✓</motion.div>
           )}
           <div className="card__front">
-            <Image src={card.images.small} alt={card.name} fill className="object-cover"
-              sizes="140px" />
+            <Image src={card.images.small} alt={card.name} fill className="object-cover" sizes="140px" />
             <div className="card__shine" /><div className="card__glare" />
           </div>
         </div>
@@ -121,7 +122,9 @@ function SupporterCard({ card, selected, onClick }: { card: TcgCard; selected: b
 
   const applyVars = useCallback(() => {
     const el = rotRef.current; if (!el) return;
-    sR.current.tick(); sG.current.tick(); sB.current.tick();
+    const mr = sR.current.tick();
+    const mg = sG.current.tick();
+    const mb = sB.current.tick();
     const r = sR.current.get(), g = sG.current.get(), b = sB.current.get();
     const fc = clamp(Math.sqrt((g.y-50)**2+(g.x-50)**2)/50,0,1);
     el.style.setProperty('--pointer-x',`${g.x.toFixed(2)}%`);
@@ -132,7 +135,7 @@ function SupporterCard({ card, selected, onClick }: { card: TcgCard; selected: b
     el.style.setProperty('--rotate-y',`${r.y.toFixed(2)}deg`);
     el.style.setProperty('--background-x',`${b.x.toFixed(2)}%`);
     el.style.setProperty('--background-y',`${b.y.toFixed(2)}%`);
-    if(sR.current.tick()||sG.current.tick()||sB.current.tick()) raf.current=requestAnimationFrame(applyVars);
+    if(mr||mg||mb) raf.current=requestAnimationFrame(applyVars);
     else raf.current=null;
   },[]);
 
