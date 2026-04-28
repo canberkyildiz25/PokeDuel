@@ -42,7 +42,7 @@ function PokemonBattleCard({ bp, side, isActive, isAttacking, isFainted }:
       }
       transition={isAttacking ? { duration: 0.4 } : { duration: 0.5 }}
       className={`relative rounded-xl overflow-hidden ${isActive ? 'ring-2 ring-yellow-400 shadow-lg' : 'opacity-60'}`}
-      style={{ aspectRatio: '0.718', width: '100%', maxWidth: isActive ? 160 : 110 }}
+      style={{ aspectRatio: '0.718', width: '100%', maxWidth: isActive ? 280 : 160 }}
     >
       <Image src={bp.card.images.small} alt={bp.card.name} fill className="object-cover" sizes="130px" />
       {isFainted && (
@@ -494,7 +494,7 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
             <div className="flex items-center gap-3">
               <div className="flex gap-2">
                 {state.aiTeam.map((bp,i) => (
-                  <div key={bp.card.id} style={{ width: i===state.aiActive ? 80 : 56, transition: 'width 0.3s' }}>
+                  <div key={bp.card.id} style={{ width: i===state.aiActive ? 170 : 95, transition: 'width 0.3s' }}>
                     <PokemonBattleCard bp={bp} side="ai" isActive={i===state.aiActive}
                       isAttacking={attackingAi&&i===state.aiActive} isFainted={bp.fainted} />
                   </div>
@@ -597,7 +597,7 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
             <div className="flex items-center gap-3">
               <div className="flex gap-2">
                 {state.playerTeam.map((bp,i) => (
-                  <div key={bp.card.id} style={{ width: i===state.playerActive ? 80 : 56, transition: 'width 0.3s' }}>
+                  <div key={bp.card.id} style={{ width: i===state.playerActive ? 170 : 95, transition: 'width 0.3s' }}>
                     <PokemonBattleCard bp={bp} side="player" isActive={i===state.playerActive}
                       isAttacking={attackingPlayer&&i===state.playerActive} isFainted={bp.fainted} />
                   </div>
