@@ -439,7 +439,7 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
   const ai = state.aiTeam[state.aiActive];
 
   return (
-    <div className="min-h-screen flex flex-col relative z-10 overflow-hidden">
+    <div className="min-h-screen flex flex-col relative z-10 overflow-x-hidden">
       <div className="fixed inset-0 z-0" style={{ background: location.bg }} />
       <div className="fixed inset-0 z-0"
         style={{ backgroundImage: `url(${location.image})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.4 }} />
@@ -453,7 +453,7 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
           transition={{ duration: 3+i*0.5, repeat: Infinity, delay: i*0.4 }} />
       ))}
 
-      <div className="relative z-10 flex flex-col h-screen max-w-5xl mx-auto w-full px-4 py-4 gap-3">
+      <div className="relative z-10 flex flex-col max-w-5xl mx-auto w-full px-3 sm:px-4 py-3 sm:py-4 gap-2 sm:gap-3 pb-28">
         {/* Top bar */}
         <div className="flex items-center justify-between">
           <div className="text-sm font-bold" style={{ color: location.accent }}>{location.emoji} {location.name}</div>
@@ -462,21 +462,21 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
         </div>
 
         {/* AI side */}
-        <div className="flex items-start gap-4 rounded-2xl p-4 relative"
+        <div className="flex items-start gap-2 sm:gap-4 rounded-2xl p-2 sm:p-4 relative"
           style={{ background: 'rgba(0,0,0,0.5)', border: `1px solid ${aiTrainer.color}33` }}>
-          <div className="flex items-start gap-2 shrink-0">
+          <div className="flex items-start gap-1 sm:gap-2 shrink-0">
             <div className="flex flex-col items-center gap-1">
-              <div className="w-14 h-16 rounded-xl overflow-hidden flex items-center justify-center"
+              <div className="w-10 h-12 sm:w-14 sm:h-16 rounded-xl overflow-hidden flex items-center justify-center"
                 style={{ background: `linear-gradient(135deg,${aiTrainer.color}33,${aiTrainer.color2}22)`, border: `2px solid ${aiTrainer.color}66` }}>
                 <img src={aiTrainer.sprite} alt={aiTrainer.name} className="w-full h-full object-contain"
                   style={{ filter: `drop-shadow(0 2px 6px ${aiTrainer.color}99)` }} />
               </div>
-              <span className="text-[10px] font-black text-white/80 text-center leading-tight" style={{maxWidth:56}}>{aiTrainer.name}</span>
+              <span className="text-[9px] sm:text-[10px] font-black text-white/80 text-center leading-tight" style={{maxWidth:44}}>{aiTrainer.name}</span>
             </div>
             {/* AI Supporter card */}
             <div className="flex flex-col items-center gap-0.5">
               <div className={`relative rounded-lg overflow-hidden transition-all ${aiSupporterUsed ? 'opacity-40 grayscale' : ''}`}
-                style={{ width: 36, aspectRatio: '0.718' }}>
+                style={{ width: 'clamp(26px, 8vw, 36px)', aspectRatio: '0.718' }}>
                 <Image src={aiSupporter.images.small} alt={aiSupporter.name} fill className="object-cover" sizes="36px" />
                 {aiSupporterUsed && (
                   <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
@@ -492,9 +492,9 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
 
           <div className="flex-1 flex flex-col gap-2">
             <div className="flex items-center gap-3">
-              <div className="flex gap-2">
+              <div className="flex gap-1 sm:gap-2">
                 {state.aiTeam.map((bp,i) => (
-                  <div key={bp.card.id} style={{ width: i===state.aiActive ? 170 : 95, transition: 'width 0.3s' }}>
+                  <div key={bp.card.id} style={{ width: i===state.aiActive ? 'clamp(65px,20vw,170px)' : 'clamp(36px,11vw,95px)', transition: 'width 0.3s' }}>
                     <PokemonBattleCard bp={bp} side="ai" isActive={i===state.aiActive}
                       isAttacking={attackingAi&&i===state.aiActive} isFainted={bp.fainted} />
                   </div>
@@ -525,7 +525,7 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
         </div>
 
         {/* Battle log + supporter */}
-        <div className="flex gap-3">
+        <div className="flex gap-2 sm:gap-3">
           {/* Log */}
           <div className="flex-1 rounded-xl px-4 py-3"
             style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.08)', minHeight: 80 }}>
@@ -543,7 +543,7 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
           {/* Supporter card widget */}
           <div className="flex flex-col items-center gap-1 shrink-0">
             <div className={`relative rounded-xl overflow-hidden transition-all ${supporterUsed ? 'opacity-40 grayscale' : ''}`}
-              style={{ width: 52, aspectRatio: '0.718' }}>
+              style={{ width: 'clamp(38px, 10vw, 52px)', aspectRatio: '0.718' }}>
               <Image src={playerSupporter.images.small} alt={playerSupporter.name} fill className="object-cover" sizes="52px" />
               {supporterUsed && (
                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
@@ -571,7 +571,7 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
         </div>
 
         {/* Player side */}
-        <div className="flex items-start gap-4 rounded-2xl p-4 relative"
+        <div className="flex items-start gap-2 sm:gap-4 rounded-2xl p-2 sm:p-4 relative"
           style={{ background: 'rgba(0,0,0,0.5)', border: `1px solid ${playerTrainer.color}33` }}>
           <AnimatePresence>
             {dmgDisplay?.side === 'player' && (
@@ -585,19 +585,19 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
           </AnimatePresence>
 
           <div className="flex flex-col items-center gap-1 shrink-0">
-            <div className="w-14 h-16 rounded-xl overflow-hidden flex items-center justify-center"
+            <div className="w-10 h-12 sm:w-14 sm:h-16 rounded-xl overflow-hidden flex items-center justify-center"
               style={{ background: `linear-gradient(135deg,${playerTrainer.color}33,${playerTrainer.color2}22)`, border: `2px solid ${playerTrainer.color}66` }}>
               <img src={playerTrainer.sprite} alt={playerTrainer.name} className="w-full h-full object-contain"
                 style={{ filter: `drop-shadow(0 2px 6px ${playerTrainer.color}99)` }} />
             </div>
-            <span className="text-[10px] font-black text-white/80 text-center leading-tight" style={{maxWidth:56}}>{playerTrainer.name}</span>
+            <span className="text-[9px] sm:text-[10px] font-black text-white/80 text-center leading-tight" style={{maxWidth:44}}>{playerTrainer.name}</span>
           </div>
 
           <div className="flex-1 flex flex-col gap-2">
             <div className="flex items-center gap-3">
-              <div className="flex gap-2">
+              <div className="flex gap-1 sm:gap-2">
                 {state.playerTeam.map((bp,i) => (
-                  <div key={bp.card.id} style={{ width: i===state.playerActive ? 170 : 95, transition: 'width 0.3s' }}>
+                  <div key={bp.card.id} style={{ width: i===state.playerActive ? 'clamp(65px,20vw,170px)' : 'clamp(36px,11vw,95px)', transition: 'width 0.3s' }}>
                     <PokemonBattleCard bp={bp} side="player" isActive={i===state.playerActive}
                       isAttacking={attackingPlayer&&i===state.playerActive} isFainted={bp.fainted} />
                   </div>
@@ -616,13 +616,16 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
           </div>
         </div>
 
-        {/* Action buttons */}
-        <div className="flex gap-3 justify-center mt-auto pb-4">
+      </div>
+
+      {/* Action buttons — fixed at bottom so always visible on mobile */}
+      <div className="fixed bottom-0 left-0 right-0 z-20 flex gap-2 sm:gap-3 justify-center px-4 pb-5 pt-3"
+        style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.92))' }}>
           {!state.winner ? (
             <>
               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                 onClick={doTurn} disabled={state.phase !== 'idle'}
-                className="px-8 py-3 rounded-full font-black text-black text-lg cursor-pointer"
+                className="px-6 sm:px-8 py-3 rounded-full font-black text-black text-base sm:text-lg cursor-pointer"
                 style={{
                   background: state.phase === 'idle' ? `linear-gradient(135deg,${playerTrainer.color},${playerTrainer.color2})` : 'rgba(255,255,255,0.2)',
                   color: state.phase === 'idle' ? '#000' : 'rgba(255,255,255,0.4)',
@@ -634,7 +637,7 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
 
               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                 onClick={() => setAutoMode(p => !p)}
-                className="px-4 py-3 rounded-full font-bold text-sm cursor-pointer"
+                className="px-3 sm:px-4 py-3 rounded-full font-bold text-sm cursor-pointer"
                 style={{
                   background: autoMode ? `${playerTrainer.color}44` : 'rgba(255,255,255,0.08)',
                   border: `1px solid ${autoMode ? playerTrainer.color : 'rgba(255,255,255,0.15)'}`,
@@ -645,9 +648,9 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
             </>
           ) : (
             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200 }}
-              className="flex flex-col items-center gap-4">
-              <div className="text-5xl">{state.winner === 'player' ? '🏆' : '💀'}</div>
-              <div className="text-2xl font-black text-white">
+              className="flex flex-col items-center gap-3">
+              <div className="text-4xl sm:text-5xl">{state.winner === 'player' ? '🏆' : '💀'}</div>
+              <div className="text-xl sm:text-2xl font-black text-white text-center">
                 {state.winner === 'player' ? `${playerTrainer.name} KAZANDI!` : `${aiTrainer.name} KAZANDI!`}
               </div>
               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={onRematch}
@@ -657,7 +660,6 @@ export default function BattleScreen({ playerTrainer, playerDeck, playerSupporte
               </motion.button>
             </motion.div>
           )}
-        </div>
       </div>
     </div>
   );

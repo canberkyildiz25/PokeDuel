@@ -245,8 +245,8 @@ export default function DeckSelect({ trainer, onConfirm, onBack }: Props) {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="relative flex-1 max-w-xs">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="relative w-full sm:flex-1 sm:max-w-xs">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm">🔍</span>
               <input type="text" placeholder="Kart ara..." value={search}
                 onChange={e => setSearch(e.target.value)}
