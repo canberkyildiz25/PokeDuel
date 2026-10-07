@@ -1,139 +1,92 @@
-# 🎮 PokéDuel - Pokémon TCG Battle Game
+# PokéDuel
 
-Pokémon Trading Card Game temelli interaktif bir duel oyunu! Antrenörleri seçin, destelerinizi hazırlayın, farklı arenalarda savaşın ve rakiplerinizi yenin.
+A card duel in the browser: pick a trainer, build a deck of five Pokémon cards, choose an arena and fight a computer opponent turn by turn.
 
-## ✨ Özellikler
+**Live:** https://pokedueltr.netlify.app/
 
-- 🎭 **Çok Oyunculu Antrenör Seçimi** - Farklı antrenörleri ve onların rakiplerini seçin
-- 🃏 **TCG Deste Yönetimi** - Pokémon kartlarından oluşan desteler oluşturun
-- 🏟️ **Dinamik Arenalar** - Farklı lokasyonlarda savaşın, her biri benzersiz mekanikler ile
-- ⚔️ **Gerçekçi Savaş Motoru** - Statlar, tip avantajları ve dön-tabanlı sistemle
-- 🎨 **Güzel Animasyonlar** - Framer Motion ile akıcı geçişler ve efektler
-- 🎵 **Ses Efektleri** - İmmerısif oyun deneyimi
-- 📱 **Responsive Tasarım** - Tüm cihazlarda oynanabilir
-- 🚀 **Modern Stack** - Next.js 16, React 19, TypeScript
+A fan project, made to learn how to build a small game in React: a state machine for the battle, cards that tilt and shine under the pointer, and screens that hand over to one another without a page load. It is not affiliated with Nintendo, Game Freak or The Pokémon Company, and nothing is sold on it.
 
-## 🛠️ Teknoloji Yığını
+## How a game goes
 
-- **Framework:** [Next.js](https://nextjs.org) 16.2.4
-- **UI Library:** React 19.2.4
-- **Styling:** Tailwind CSS 4
-- **Animasyon:** Framer Motion 12.38.0
-- **Dil:** TypeScript 5
-- **Linting:** ESLint 9
+1. **Choose a trainer.** The opponent is one of the others.
+2. **Build a deck.** Five cards from a list you can search. Two cards can be set side by side to compare them before you commit.
+3. **Choose an arena.** Each arena favours one type.
+4. **Fight.** You and the opponent attack in turn. When a Pokémon faints the next one comes in, and the side with nobody left loses.
 
-## 📋 Proje Yapısı
+## The rules the engine plays by
 
-```
-src/
-├── app/
-│   ├── components/          # React bileşenleri
-│   │   ├── BattleScreen     # Savaş arayüzü
-│   │   ├── TrainerSelect    # Antrenör seçimi
-│   │   ├── DeckSelect       # Deste seçimi
-│   │   ├── LocationSelect   # Arena seçimi
-│   │   ├── PokemonCard      # Kart görünümü
-│   │   ├── TypeBadge        # Tip göstergesi
-│   │   ├── StatBar          # İstatistik göstergesi
-│   │   ├── CompareModal     # Karşılaştırma penceresi
-│   │   ├── AudioPlayer      # Ses yönetimi
-│   │   ├── SplashScreen     # Başlangıç ekranı
-│   │   └── StarField        # Arka plan efekti
-│   ├── layout.tsx           # Ana layout
-│   ├── page.tsx             # Ana sayfa
-│   └── globals.css          # Global stiller
-│
-└── lib/
-    ├── battle-engine.ts     # Savaş mekanikler
-    ├── pokemon-utils.ts     # Pokémon yardımcı fonksiyonları
-    ├── trainers.ts          # Antrenör verileri
-    ├── locations.ts         # Arena verileri
-    ├── types.ts             # TypeScript tipleri
-    ├── tcg-types.ts         # TCG kart tipleri
-    ├── cards.json           # Kart veritabanı
-    └── spring.ts            # Animasyon yapılandırması
-```
+All of it is in `src/lib/battle-engine.ts`, and it is short on purpose.
 
-## 🚀 Başlangıç
+- **Hit points** come from a card's rarity: rarity score × 30 + 60.
+- **Damage** is 20 + rarity score × 8, plus a random 0 to 19.
+- **Type advantage** multiplies the damage by 1.5. The table is a simplified one from the card game: Fire beats Grass and Metal, Water beats Fire and Fighting, and so on.
+- **The arena's bonus** multiplies it by 1.15 when the attacker's type is the one the arena favours.
 
-### Gereksinimler
-- Node.js 18+ veya Bun
-- npm/yarn/pnpm
+## What else is in it
 
-### Kurulum
+- **Cards that behave like cards.** They tilt with the pointer and carry a holographic shine, after the technique in pokemon-cards-css.
+- **Music** that starts when you enter and can be switched off, and confetti when you choose your trainer.
+- **A battle screen that fits a phone**: the attack button stays in view however small the window is.
+
+## Stack
+
+- Next.js 16 (App Router), exported as a static site
+- React 19 and TypeScript 5
+- Tailwind CSS 4
+- Framer Motion 12
+- ESLint 9
+
+## Run it
+
+Node 20 or newer.
 
 ```bash
-# Depoyu klonlayın
-git clone https://github.com/canberkyildiz25/PokeDuel.git
-cd PokeDuel/pokemon-app
-
-# Bağımlılıkları yükleyin
 npm install
-# veya
-yarn install
-# veya
-pnpm install
+npm run dev      # http://localhost:3000
+npm run build    # the static site, into out/
+npm run lint
 ```
 
-### Geliştirme Sunucusunu Başlatın
+There are no environment variables and no server. The cards are a file in the repository; their pictures are loaded from `images.pokemontcg.io`.
 
-```bash
-npm run dev
-# veya
-yarn dev
-# veya
-pnpm dev
+## Layout of the code
+
+```
+src/app/
+  page.tsx                  the game: which screen is showing, and what has been chosen so far
+  layout.tsx, globals.css
+  components/
+    SplashScreen            the way in
+    TrainerSelect           choosing a trainer
+    DeckSelect              building the deck
+    CompareModal            two cards side by side
+    LocationSelect          choosing an arena
+    BattleScreen            the fight
+    PokemonCard, TypeBadge, StatBar
+    AudioPlayer, StarField, Confetti
+src/lib/
+  battle-engine.ts          hit points, damage, turns, who has won
+  cards.json                the cards
+  tcg-types.ts              the shape of a card, and a score for each rarity
+  trainers.ts, locations.ts the trainers and the arenas
+  pokemon-utils.ts          colours for types, labels for stats
+  spring.ts                 the springs the motion uses
+public/trainers, public/arenas   the pictures of both
+netlify.toml                the build, and the folder that is published
 ```
 
-Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açın.
+## Deploying
 
-### Üretim Derlemesi
+A static site on Netlify: `npm run build`, then the `out` folder.
 
-```bash
-npm run build
-npm start
-```
+## Credits
 
-## 🎮 Nasıl Oynanır
+- Card data and card images: the Pokémon TCG API (pokemontcg.io).
+- The card tilt and shine: after [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) by Simon Goellner.
+- Pokémon and its characters belong to Nintendo, Creatures and Game Freak.
 
-1. **Antrenör Seçin** - Oyun başında antrenörleri seçin
-2. **Deste Oluşturun** - Pokémon kartlarından 5 kartlık bir deste seçin
-3. **Arena Seçin** - Savaşacağınız lokasyonu belirleyin
-4. **Savaşın** - Karşılıklı savaşta rakibi yenmeye çalışın
-5. **Kazanın** - İstatistik avantajlarını kullanarak zaferi alın
+The interface is in Turkish.
 
-## 📊 Oyun Mekanikleri
+## Author
 
-### Savaş Sistemi
-- **Tur Tabanlı:** Oyuncular ve rakip sırayla hareket eder
-- **Tip Avantajı:** Kendi savaş motoru tarafından hesaplanan avantajlar
-- **İstatistikler:** HP, Saldırı, Savunma, Hız, Özel Saldırı, Özel Savunma
-
-### Kartlar
-- Her kart benzersiz istatistiklere sahiptir
-- Farklı Pokémon tipleri farklı mekanikler sunar
-- Deste seçimi stratejik başarının anahtarıdır
-
-## 🙏 Teşekkürler
-
-Bu proje aşağıdaki harika açık kaynak projelerden yararlanmıştır:
-
-- **[Next.js](https://github.com/vercel/next.js)** - Harika React framework
-- **[Framer Motion](https://github.com/framer/motion)** - Profesyonel animasyon kütüphanesi
-- **[Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)** - Utility-first CSS framework
-- **[TypeScript](https://github.com/microsoft/TypeScript)** - Type-safe JavaScript
-- **[pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css)** - Pokémon kart tasarımı ve CSS animasyon ilhamı
-
-Ayrıca Pokémon TCG'nin ilhamlı oyun tasarımından esinlenilmiştir.
-
-## 📝 Lisans
-
-Bu proje kişisel kullanım ve öğrenme amaçlıdır.
-
-## 👨‍💻 Geliştirici
-
-Tarafından oluşturuldu: [canberkyildiz25](https://github.com/canberkyildiz25)
-
----
-
-**Eğlenceli oyun oynamalar!** 🎮✨
+[Canberk Yıldız](https://canberkyildiz.netlify.app)
