@@ -1012,8 +1012,8 @@
   @media (min-width: 40rem) {
     .duel {
       /* a short window gets smaller cards, so that the mat and the hand stay in sight together */
-      --active-w: min(9rem, 14svh);
-      --bench-w: min(4.75rem, 7.5svh);
+      --active-w: min(9rem, 13svh);
+      --bench-w: min(4.75rem, 7svh);
       --pile-w: min(3rem, 5.5svh);
       --hand-w: min(5.75rem, 10svh);
     }
