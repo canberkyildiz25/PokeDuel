@@ -1,0 +1,356 @@
+@import 'tailwindcss';
+
+@import './styles/chrome.css';
+@import './styles/things.css';
+@import './styles/home.css';
+@import './styles/seat.css';
+@import './styles/duel.css';
+@import './styles/pages.css';
+
+/* PokéDuel is a card table at a small tournament, seen from above. The ground
+   is red baize: a photograph of felt, repeated. What lies on it is real or is
+   drawn plainly as what it is: cards, paper, tokens, a coin. Paper is cream
+   and is typed on; the cloth is lettered in a condensed poster face. Yellow
+   is the pencil and the brass: it marks the thing to press and whose turn it
+   is. The rules are in design.md. */
+
+@theme static {
+  --font-display: var(--font-shoulders), 'Arial Narrow', 'Helvetica Neue', sans-serif;
+  --font-typed: var(--font-courier), 'Courier New', ui-monospace, monospace;
+
+  /* a control answering a hand */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  /* a card or a sheet of paper arriving on the table */
+  --ease-slow: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  /* the cloth: what the photograph averages to, and the dark it falls away into */
+  --felt: oklch(43% 0.17 30);
+  --felt-deep: oklch(20% 0.08 27);
+  --on-felt: oklch(96.5% 0.025 90);
+  --on-felt-2: oklch(88% 0.055 62);
+
+  /* paper, and what is printed and typed on it */
+  --paper: oklch(95.5% 0.022 88);
+  --paper-2: oklch(91% 0.03 86);
+  --ink: oklch(23% 0.02 50);
+  --ink-2: oklch(42% 0.022 50);
+  --rule: oklch(76% 0.04 78);
+  --red: oklch(52% 0.2 29);
+  --on-red: oklch(97% 0.02 90);
+
+  /* pencil and brass */
+  --yellow: oklch(87% 0.155 92);
+  --yellow-deep: oklch(70% 0.13 82);
+  --on-yellow: oklch(24% 0.035 70);
+
+  /* the playmat: black neoprene */
+  --mat: oklch(20% 0.012 285);
+  --mat-2: oklch(26% 0.014 285);
+  --mat-line: oklch(46% 0.016 285);
+  --on-mat: oklch(93% 0.015 90);
+  --on-mat-2: oklch(72% 0.015 285);
+
+  /* the ten kinds of card: a bead of each colour is a token */
+  --k-fire: oklch(66% 0.2 42);
+  --k-water: oklch(66% 0.13 238);
+  --k-grass: oklch(70% 0.17 140);
+  --k-lightning: oklch(87% 0.16 96);
+  --k-psychic: oklch(62% 0.19 328);
+  --k-fighting: oklch(58% 0.13 52);
+  --k-darkness: oklch(42% 0.05 285);
+  --k-metal: oklch(74% 0.02 250);
+  --k-dragon: oklch(70% 0.12 82);
+  --k-colorless: oklch(90% 0.012 90);
+
+  /* shadows are the cloth's own colour, darkened: never grey */
+  --shade: oklch(12% 0.06 27);
+  --shade-soft: oklch(12% 0.06 27 / 0.45);
+  --shade-mid: oklch(12% 0.06 27 / 0.62);
+  --shade-deep: oklch(12% 0.06 27 / 0.75);
+  /* the lamp over the table, and the dark it leaves at the edges */
+  --lamp: oklch(92% 0.09 80 / 0.2);
+  --dusk: oklch(14% 0.07 27 / 0.62);
+  --drop: 0 1px 1px oklch(12% 0.06 27 / 0.35), 0 10px 22px -8px oklch(12% 0.06 27 / 0.7);
+  --drop-high: 0 2px 2px oklch(12% 0.06 27 / 0.3), 0 24px 40px -12px oklch(12% 0.06 27 / 0.75);
+
+  --focus: var(--yellow);
+  /* two corners only: paper and controls are almost square, a card has a card's corner */
+  --r-paper: 0.125rem;
+  --r-card: 4.6% / 3.3%;
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --page: 90rem;
+
+  --t-poster: clamp(4rem, min(15vw, 26svh), 13rem);
+  --t-h1: clamp(2.75rem, 7vw, 5.5rem);
+  --t-h2: clamp(1.875rem, 4vw, 3rem);
+  --t-h3: 1.5rem;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    overflow-x: clip;
+    background: var(--felt-deep);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    position: relative;
+    overflow-x: clip;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    /* the photograph is drawn at half its size, so that the fibres are as fine as they would be from a chair */
+    background: var(--felt) image-set(url('/table/felt.avif') type('image/avif'), url('/table/felt.jpg') type('image/jpeg')) 0 0 / 32rem 24rem;
+    color: var(--on-felt);
+    font-family: var(--font-typed);
+    font-size: 1rem;
+    line-height: 1.55;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* one lamp over the middle of the table: the cloth is brightest under it and falls away to the edges */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 90% at 50% 22%, var(--lamp) 0%, transparent 46%),
+      radial-gradient(140% 110% at 50% 26%, transparent 34%, var(--dusk) 100%);
+  }
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-style: normal;
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  /* capitals stacked close need a full line each, or they touch */
+  h1 {
+    line-height: 1;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  a {
+    color: inherit;
+  }
+  ::selection {
+    background: var(--yellow);
+    color: var(--on-yellow);
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+  dialog {
+    color: inherit;
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: var(--page);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 60;
+    padding: 0.75rem 1.25rem;
+    background: var(--yellow);
+    color: var(--on-yellow);
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .skip-link:focus-visible {
+    top: 1rem;
+  }
+
+  /* ---------- Lettering on the cloth ---------- */
+  /* a word in the poster face, small: the name of a place on the table */
+  .label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  /* a number that is read off the table: hit points, a price, a count */
+  .fig {
+    font-family: var(--font-typed);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+  }
+  .link:active {
+    opacity: 0.7;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0 1.5rem;
+    border: 2px solid var(--ink);
+    border-radius: var(--r-paper);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.125rem;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      transform 140ms var(--ease-out),
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
+  }
+  .btn:active {
+    transform: translateY(1px) scale(0.985);
+  }
+  .btn[disabled],
+  .btn[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  /* the one thing to press */
+  .btn--go {
+    border-color: var(--yellow);
+    background: var(--yellow);
+    color: var(--on-yellow);
+  }
+  .btn--line {
+    border-color: currentColor;
+    background: transparent;
+    color: inherit;
+  }
+  .btn--small {
+    min-height: 2.75rem;
+    padding-inline: 1rem;
+    font-size: 1rem;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .btn--go:not([disabled]):hover {
+      border-color: var(--yellow-deep);
+      background: var(--yellow-deep);
+    }
+    .btn:not(.btn--go, .btn--line, [disabled]):hover {
+      border-color: var(--red);
+      background: var(--red);
+      color: var(--on-red);
+    }
+    .btn--line:not([disabled]):hover {
+      background: color-mix(in oklab, currentColor 12%, transparent);
+    }
+  }
+  .iconbtn {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 140ms var(--ease-out);
+  }
+  .iconbtn:active {
+    transform: scale(0.92);
+  }
+  .iconbtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* ---------- Pages under the masthead ---------- */
+  .page-head {
+    padding-block: clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .page-head h1 {
+    font-size: var(--t-h1);
+  }
+  .page-head p {
+    margin-top: 1rem;
+    max-width: 34rem;
+    color: var(--on-felt-2);
+  }
+  .page-foot {
+    height: clamp(2rem, 6vw, 5rem);
+  }
+}
+
+/* Going from one page to another: the old one fades as the new one arrives.
+   It is kept short, because the new page cannot be pressed until it has. */
+::view-transition-group(*) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease-slow);
+}
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 220ms;
+  animation-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+  .btn,
+  .iconbtn {
+    transition: none;
+  }
+  .btn:active,
+  .iconbtn:active {
+    transform: none;
+  }
+}

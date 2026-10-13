@@ -1,0 +1,586 @@
+/* Before the match: the sign-in sheet, the deck, and the mat. */
+
+@layer components {
+  /* ---------- The four stages, across the head of the page ---------- */
+  .stages ol {
+    display: flex;
+    gap: 0 clamp(0.75rem, 3vw, 2rem);
+    padding-top: 0.5rem;
+  }
+  .stages li > * {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-decoration: none;
+    color: var(--on-felt-2);
+  }
+  .stages b {
+    font-size: 0.875rem;
+  }
+  .stages [aria-current='step'] {
+    color: var(--on-felt);
+    box-shadow: inset 0 -2px 0 var(--yellow);
+  }
+  .stages [data-later] {
+    opacity: 0.62;
+  }
+  .stages a:active {
+    opacity: 0.7;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .stages a:hover {
+      color: var(--on-felt);
+    }
+  }
+
+  /* ---------- The sign-in sheet ---------- */
+  .signin {
+    display: grid;
+    align-items: start;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .sheet {
+    min-width: 0;
+    padding: clamp(1rem, 3vw, 2rem);
+    transform: rotate(-0.4deg);
+  }
+  .sheet__head,
+  .sheet__row {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) 3rem;
+    align-items: center;
+    gap: 0.25rem 0.75rem;
+  }
+  .sheet__head {
+    padding-bottom: 0.75rem;
+    border-bottom: 3px double var(--ink);
+  }
+  .sheet__head span:nth-child(3),
+  .sheet__head span:nth-child(4) {
+    display: none;
+  }
+  .sheet__row {
+    position: relative;
+    min-height: 3.5rem;
+    padding-block: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+  }
+  .sheet__row input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .sheet__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .sheet__kinds {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.75rem;
+    font-size: 0.875rem;
+    color: var(--ink-2);
+  }
+  .sheet__rival {
+    display: none;
+  }
+  .sheet__mark {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    display: grid;
+    place-items: center;
+    min-height: 2.75rem;
+  }
+  /* the line you signed is gone over in pencil */
+  .sheet__row:has(input:checked) {
+    background: linear-gradient(var(--yellow), var(--yellow)) 0 50% / 100% 72% no-repeat;
+  }
+  .sheet__row:has(input:focus-visible) {
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
+  }
+  .sheet__row:has(input:active) .sheet__name {
+    opacity: 0.7;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .sheet__row:not(:has(input:checked)):hover .sheet__name {
+      color: var(--red);
+    }
+  }
+  html.live .sheet .stamp {
+    animation: stamped 220ms var(--ease-out) both;
+  }
+  @keyframes stamped {
+    from {
+      opacity: 0;
+      transform: rotate(var(--lean, -7deg)) scale(1.5);
+    }
+  }
+  @media (min-width: 40rem) {
+    .sheet__head,
+    .sheet__row {
+      grid-template-columns: 2.5rem minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(0, 0.8fr) 3.5rem;
+    }
+    .sheet__head span:nth-child(3),
+    .sheet__head span:nth-child(4),
+    .sheet__rival {
+      display: block;
+    }
+    .sheet__kinds,
+    .sheet__mark {
+      grid-column: auto;
+      grid-row: auto;
+    }
+    .sheet__rival {
+      color: var(--ink-2);
+    }
+  }
+
+  /* which round: three tickets */
+  .rounds {
+    display: grid;
+    justify-items: start;
+    gap: 1.25rem;
+  }
+  .rounds fieldset {
+    width: 100%;
+  }
+  .rounds legend {
+    margin-bottom: 0.75rem;
+  }
+  .tickets {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .ticket {
+    position: relative;
+    display: grid;
+    gap: 0.25rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: transform 200ms var(--ease-out);
+  }
+  .ticket input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .ticket__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .ticket__says {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+  /* the ticket you hold is pushed forward and marked in pencil down its edge */
+  .ticket:has(input:checked) {
+    transform: translate3d(0.5rem, 0, 0);
+    box-shadow:
+      inset 0.5rem 0 0 var(--yellow),
+      var(--drop);
+  }
+  .ticket:has(input:focus-visible) {
+    outline: 2px solid var(--yellow);
+    outline-offset: 3px;
+  }
+  .ticket:has(input:active) {
+    transform: translate3d(0.25rem, 1px, 0);
+  }
+  .rounds__hint {
+    max-width: 30rem;
+    color: var(--on-felt-2);
+  }
+  @media (min-width: 64rem) {
+    .signin {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    }
+    .rounds {
+      position: sticky;
+      top: 1.5rem;
+    }
+  }
+
+  /* ---------- Choosing a deck: eight boxes on the cloth, the card on top showing ---------- */
+  .deckpick {
+    display: grid;
+    align-items: start;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .decks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1rem;
+    min-width: 0;
+  }
+  .deckbox {
+    position: relative;
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .deckbox label {
+    display: grid;
+    justify-items: start;
+    gap: 0.25rem;
+    width: 100%;
+    cursor: pointer;
+  }
+  .deckbox input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  /* sixty cards squared up: the lead card on top, the edges of the rest under it */
+  .deckbox__stack {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 11rem);
+    margin-bottom: 0.75rem;
+    border-radius: var(--r-card);
+    box-shadow:
+      0.125rem 0.125rem 0 var(--paper-2),
+      0.25rem 0.25rem 0 var(--rule),
+      0.375rem 0.375rem 0 var(--paper-2),
+      0.5rem 0.5rem 0 var(--rule),
+      0.75rem 1rem 1.5rem -0.25rem var(--shade-deep);
+    transition: transform 260ms var(--ease-out);
+  }
+  .deckbox__stack[data-lean='left'] {
+    transform: rotate(-1.5deg);
+  }
+  .deckbox__stack[data-lean='right'] {
+    transform: rotate(1.2deg);
+  }
+  .deckbox__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.75rem;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .deckbox__stars,
+  .deckbox__counts {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--on-felt-2);
+  }
+  .deckbox__counts {
+    font-weight: 400;
+    font-size: 0.8125rem;
+  }
+  .deckbox__open {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  /* the deck you chose is pulled towards you and edged in pencil */
+  .deckbox[data-picked] .deckbox__stack {
+    transform: translate3d(0, -0.5rem, 0) rotate(0deg);
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+  .deckbox[data-picked] .deckbox__name {
+    color: var(--yellow);
+  }
+  .deckbox:has(input:focus-visible) .deckbox__stack {
+    outline: 2px solid var(--yellow);
+    outline-offset: 6px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .deckbox:not([data-picked]):hover .deckbox__stack {
+      transform: translate3d(0, -0.25rem, 0) rotate(0deg);
+    }
+  }
+
+  /* everything in a deck, laid out to be looked through */
+  .sheetbox--wide {
+    width: min(100% - 2rem, 62rem);
+  }
+  .decklist {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1rem, 3vw, 1.75rem);
+  }
+  .decklist section {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .decklist__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+    gap: 1rem 0.75rem;
+  }
+  .decklist__card {
+    position: relative;
+    display: block;
+    width: 100%;
+    cursor: zoom-in;
+  }
+  .decklist__copies {
+    position: absolute;
+    right: -0.375rem;
+    bottom: -0.375rem;
+    z-index: 4;
+    min-width: 2rem;
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--r-paper);
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.875rem;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  /* who plays whom, and with what */
+  .pairing {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    max-width: 24rem;
+    padding: 1.5rem;
+    transform: rotate(0.7deg);
+  }
+  .pairing h2 {
+    width: 100%;
+    font-size: var(--t-h3);
+    letter-spacing: 0.03em;
+  }
+  .pairing dl {
+    width: 100%;
+  }
+  .pairing dl > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pairing dd {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.375rem;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .pairing p {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+  .pairing__hint {
+    min-height: 1.5rem;
+  }
+
+  /* ---------- A card looked at closely ---------- */
+  .sheetbox {
+    width: min(100% - 2rem, 54rem);
+    max-height: min(100dvh - 2rem, 46rem);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: transparent;
+    opacity: 0;
+    transform: translate3d(0, 0.75rem, 0) scale(0.98);
+    transition:
+      opacity 200ms var(--ease-out),
+      transform 200ms var(--ease-out),
+      overlay 200ms allow-discrete,
+      display 200ms allow-discrete;
+  }
+  .sheetbox[open] {
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    .sheetbox[open] {
+      opacity: 0;
+      transform: translate3d(0, 0.75rem, 0) scale(0.98);
+    }
+  }
+  .sheetbox::backdrop {
+    background: var(--shade-deep);
+    opacity: 0;
+    transition:
+      opacity 200ms ease,
+      overlay 200ms allow-discrete,
+      display 200ms allow-discrete;
+  }
+  .sheetbox[open]::backdrop {
+    opacity: 1;
+  }
+  @starting-style {
+    .sheetbox[open]::backdrop {
+      opacity: 0;
+    }
+  }
+  .sheetbox__in {
+    display: grid;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.5rem;
+  }
+  .sheetbox__card {
+    justify-self: center;
+    width: min(100%, 17rem);
+  }
+  .sheetbox__facts {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+  .sheetbox__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px double var(--ink);
+  }
+  .sheetbox__top h2 {
+    font-size: 2rem;
+  }
+  .sheetbox__top .iconbtn {
+    flex: none;
+    margin: -0.5rem -0.5rem 0 0;
+  }
+  .sheetbox__does {
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+  .sheetbox__note {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .facts > div {
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+  }
+  .moves li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.25rem 1rem;
+    padding-block: 0.75rem;
+    border-top: 1px solid var(--rule);
+  }
+  .moves li:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+  .moves__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 0.75rem;
+  }
+  .moves__name strong {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.375rem;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .moves__hit {
+    font-size: 1.25rem;
+  }
+  .moves__does {
+    grid-column: 1 / -1;
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+  .sheetbox__acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+  }
+  @media (min-width: 40rem) {
+    .decks {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 48rem) {
+    .sheetbox__in {
+      grid-template-columns: 20rem minmax(0, 1fr);
+    }
+    .sheetbox__card {
+      width: 100%;
+    }
+    .decklist__cards {
+      grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+    }
+  }
+  @media (min-width: 64rem) {
+    .deckpick {
+      grid-template-columns: minmax(0, 1fr) 22rem;
+    }
+    .pairing {
+      position: sticky;
+      top: 1.5rem;
+    }
+  }
+  @media (min-width: 80rem) {
+    .decks {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket,
+  .deckbox__stack,
+  .sheetbox {
+    transition: none;
+  }
+  .ticket:has(input:checked),
+  .deckbox[data-picked] .deckbox__stack,
+  .sheetbox {
+    transform: none;
+  }
+}

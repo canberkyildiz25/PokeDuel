@@ -1,0 +1,206 @@
+/* The pages that are read rather than played: the rules sheet, the credits,
+   and the page for an address that leads nowhere. */
+
+@layer components {
+  /* ---------- The rules: leaves of one sheet, laid out on the cloth ---------- */
+  .rules {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 1.25rem;
+  }
+  .leaf {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    min-width: 0;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+  }
+  .leaf:nth-child(odd) {
+    transform: rotate(-0.25deg);
+  }
+  .leaf:nth-child(even) {
+    transform: rotate(0.3deg);
+  }
+  .leaf h2 {
+    font-size: var(--t-h3);
+    letter-spacing: 0.03em;
+  }
+  .leaf h3 {
+    font-size: 1.1875rem;
+    letter-spacing: 0.04em;
+  }
+  .leaf p,
+  .leaf li,
+  .leaf dd {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+  .leaf__lead {
+    max-width: 44rem;
+  }
+  .leaf__cols {
+    display: grid;
+    gap: 1.25rem 2rem;
+  }
+  .leaf__cols > div {
+    display: grid;
+    align-content: start;
+    gap: 0.625rem;
+  }
+  .leaf__steps {
+    display: grid;
+    gap: 0.5rem;
+    counter-reset: step;
+  }
+  .leaf__steps li {
+    position: relative;
+    padding-left: 1.75rem;
+    counter-increment: step;
+  }
+  .leaf__steps li::before {
+    content: counter(step) '.';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+  /* a list of things and what each does: the name in the margin, the rest beside it */
+  .leaf__list {
+    display: grid;
+  }
+  .leaf__list > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.125rem 1rem;
+    padding-block: 0.625rem;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .leaf__list > div:first-child {
+    padding-top: 0;
+  }
+  .leaf__list > div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .leaf__list dt {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.0625rem;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .leaf__note {
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-2);
+  }
+  .leaf__sub {
+    padding-top: 0.75rem;
+    border-top: 3px double var(--ink);
+  }
+
+  .leaf__sort {
+    margin-left: 0.5rem;
+  }
+  .leaf__list dt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+  .leaf__plain {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .leaf__plain li {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+  .leaf__plain li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+  }
+
+  /* ---------- The credits: one sheet, as at the back of a programme ---------- */
+  .colophon {
+    display: grid;
+    gap: 0;
+    max-width: 46rem;
+    padding: clamp(1.25rem, 4vw, 2.25rem);
+    transform: rotate(-0.3deg);
+  }
+  .colophon > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.375rem 1.5rem;
+    padding-block: 1rem;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .colophon > div:first-child {
+    padding-top: 0;
+  }
+  .colophon > div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .colophon dd {
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+  .colophon .link {
+    text-decoration-thickness: 1px;
+  }
+
+  /* ---------- An address that leads nowhere: one card, face down ---------- */
+  .lost {
+    display: grid;
+    align-items: center;
+    gap: clamp(1.5rem, 5vw, 3.5rem);
+    padding-block: clamp(2rem, 8vw, 6rem);
+  }
+  .lost__card {
+    width: clamp(9rem, 34vw, 14rem);
+    transform: rotate(-7deg);
+  }
+  .lost h1 {
+    font-size: var(--t-h1);
+  }
+  .lost p {
+    margin-top: 1rem;
+    max-width: 30rem;
+    color: var(--on-felt-2);
+  }
+  .lost__acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 40rem) {
+    .leaf__list > div,
+    .colophon > div {
+      grid-template-columns: 9rem minmax(0, 1fr);
+    }
+    .lost {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+  }
+  @media (min-width: 48rem) {
+    .leaf__cols {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64rem) {
+    .rules {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+    .leaf--wide {
+      grid-column: 1 / -1;
+    }
+  }
+}

@@ -1,0 +1,170 @@
+/* The front page: the tournament's flyer on the cloth, five cards fanned out
+   beside it, and under them the slip that says how a match goes. */
+
+@layer components {
+  .front {
+    display: grid;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 4rem);
+    padding-block: clamp(1rem, 4vw, 3rem) clamp(2rem, 5vw, 4rem);
+  }
+
+  /* ---------- The flyer ---------- */
+  .flyer {
+    display: grid;
+    gap: 1.25rem;
+    justify-self: start;
+    width: 100%;
+    max-width: 33rem;
+    padding: clamp(1.25rem, 3.4vw, 2.5rem);
+    transform: rotate(-1.4deg);
+    box-shadow: var(--drop-high);
+    /* the name is sized by the sheet it is printed on */
+    container-type: inline-size;
+  }
+  .flyer__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px double var(--ink);
+  }
+  .flyer h1 {
+    /* one word on one line, as wide as the sheet allows */
+    font-size: 26cqw;
+    font-weight: 900;
+    line-height: 0.84;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+  .flyer__say {
+    max-width: 26rem;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+  .flyer__acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 0.25rem;
+  }
+
+  /* ---------- Five cards, fanned ---------- */
+  .fan {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 44rem);
+    /* as tall as a card and the rise of the fan */
+    aspect-ratio: 5 / 3;
+    --w: 29%;
+  }
+  .fan li {
+    position: absolute;
+    left: calc(var(--i) * 17.75%);
+    top: calc((var(--i) - 2) * (var(--i) - 2) * 3.4% + 2%);
+    width: var(--w);
+    transform: rotate(calc((var(--i) - 2) * 7.5deg));
+    transition: transform 420ms var(--ease-out);
+  }
+  /* the card under the pointer comes up off the cloth and over its neighbours */
+  @media (hover: hover) and (pointer: fine) {
+    .fan li:hover {
+      z-index: 2;
+      transform: rotate(calc((var(--i) - 2) * 7.5deg)) translate3d(0, -6%, 0) scale(1.04);
+    }
+  }
+  html.live .fan li {
+    animation: dealt 900ms var(--ease-slow) both;
+    animation-delay: calc(var(--i) * 90ms + 200ms);
+  }
+  @keyframes dealt {
+    from {
+      opacity: 0;
+      transform: rotate(calc((var(--i) - 2) * 7.5deg + 10deg)) translate3d(18%, -40%, 0);
+    }
+  }
+  html.live .flyer {
+    animation: laid 800ms var(--ease-slow) both;
+  }
+  @keyframes laid {
+    from {
+      opacity: 0;
+      transform: rotate(-4deg) translate3d(0, 1.5rem, 0);
+    }
+  }
+  @media (min-width: 64rem) {
+    .front {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      min-height: calc(100dvh - 4.25rem - 6rem);
+    }
+    .fan {
+      justify-self: end;
+    }
+  }
+
+  /* ---------- Under the fold: how a match goes, and how the last ones went ---------- */
+  .after {
+    display: grid;
+    align-items: start;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    padding-top: clamp(1rem, 4vw, 3rem);
+  }
+  .slip {
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+  .slip h2 {
+    font-size: var(--t-h3);
+    letter-spacing: 0.03em;
+  }
+  .steps {
+    counter-reset: step;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    padding-block: 0.875rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .steps li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .steps p {
+    max-width: 34rem;
+  }
+  .slip--tally {
+    transform: rotate(1.2deg);
+  }
+  .tally > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 1rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .tally > div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .tally dt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  @media (min-width: 56rem) {
+    .after {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fan li {
+    transition: none;
+  }
+}

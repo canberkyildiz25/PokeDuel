@@ -1,0 +1,1162 @@
+/* The match: the mat with both sides on it, the hand held at the edge of the
+   table, the slip the attacks are chosen from, and the slip the match is
+   written down on. */
+
+/* how far the top of the written slip has faded, once it has been scrolled */
+@property --fade-top {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@layer components {
+  /* ---------- What is printed on each mat: a few lines in the colour of its kind ---------- */
+  [data-mat] {
+    --u: 1rem;
+    --line: color-mix(in oklab, var(--bead, var(--mat-line)) 13%, transparent);
+    --print: none;
+  }
+  /* where a mat is shown small, to be chosen, its print is drawn at half size */
+  .matcard[data-mat] {
+    --u: 0.5rem;
+  }
+  /* blades */
+  [data-mat='cayir'] {
+    --print: repeating-linear-gradient(84deg, transparent 0 calc(var(--u) * 0.75), var(--line) calc(var(--u) * 0.75) calc(var(--u) * 0.75 + 1.5px));
+  }
+  /* rings on water, seen from the shore */
+  [data-mat='koy'] {
+    --print: repeating-radial-gradient(circle at 50% 140%, transparent 0 calc(var(--u) * 1.75), var(--line) calc(var(--u) * 1.75) calc(var(--u) * 1.75 + 1.5px));
+  }
+  /* the rim of a crater, from above */
+  [data-mat='krater'] {
+    --print: repeating-radial-gradient(circle at 50% 50%, transparent 0 calc(var(--u) * 2.25), var(--line) calc(var(--u) * 2.25) calc(var(--u) * 2.25 + 1.5px));
+  }
+  /* rain driven sideways */
+  [data-mat='firtina'] {
+    --print: repeating-linear-gradient(118deg, transparent 0 calc(var(--u) * 1.25), var(--line) calc(var(--u) * 1.25) calc(var(--u) * 1.25 + 1.5px));
+  }
+  /* a lattice */
+  [data-mat='gecit'] {
+    --print: repeating-linear-gradient(60deg, transparent 0 calc(var(--u) * 2), var(--line) calc(var(--u) * 2) calc(var(--u) * 2 + 1.5px)), repeating-linear-gradient(-60deg, transparent 0 calc(var(--u) * 2), var(--line) calc(var(--u) * 2) calc(var(--u) * 2 + 1.5px));
+  }
+  /* courses of brick */
+  [data-mat='ocak'] {
+    --print: repeating-linear-gradient(0deg, transparent 0 calc(var(--u) * 1.5), var(--line) calc(var(--u) * 1.5) calc(var(--u) * 1.5 + 1.5px)), repeating-linear-gradient(90deg, transparent 0 calc(var(--u) * 3.5), var(--line) calc(var(--u) * 3.5) calc(var(--u) * 3.5 + 1.5px));
+  }
+  /* bands of fog */
+  [data-mat='sis'] {
+    --line: color-mix(in oklab, var(--on-mat-2) 9%, transparent);
+    --print: repeating-linear-gradient(0deg, transparent 0 calc(var(--u) * 1.25), var(--line) calc(var(--u) * 1.25) calc(var(--u) * 2.25));
+  }
+  /* rivets in plate */
+  [data-mat='tersane'] {
+    --print: radial-gradient(circle, var(--line) 0 2px, transparent 2.5px) 0 0 / calc(var(--u) * 1.75) calc(var(--u) * 1.75);
+  }
+
+  /* ---------- The mat: black neoprene, stitched round the edge ---------- */
+  .duel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 1rem;
+    padding-block: 0.25rem 1rem;
+    min-height: 40rem;
+    /* the sizes of the cards on the mat: the Active Pokémon, a place on the Bench, a pile, a card in the hand */
+    --active-w: clamp(5.5rem, 26vw, 7rem);
+    --bench-w: clamp(2.75rem, 14.5vw, 4.25rem);
+    --pile-w: 2.25rem;
+    --hand-w: clamp(3.5rem, 17vw, 5rem);
+  }
+  .duel__main {
+    min-width: 0;
+  }
+  .mat {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+    min-width: 0;
+    padding: clamp(0.75rem, 1.6vw, 1.25rem);
+    border-radius: 0.75rem;
+    background: var(--grain), var(--print), var(--mat);
+    color: var(--on-mat);
+    box-shadow: var(--drop-high);
+    --focus: var(--yellow);
+    --zone: color-mix(in oklab, var(--on-mat) 24%, transparent);
+  }
+  /* the stitching takes the colour of the kind the deck is built round */
+  .mat::before {
+    content: '';
+    position: absolute;
+    inset: 0.375rem;
+    border: 2px dashed var(--bead, var(--mat-line));
+    border-radius: 0.5rem;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  /* what an attack looks like is drawn over everything on the mat */
+  .fx {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  /* the name of the attack, called out as it is made */
+  .callout {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 7;
+    max-width: 90%;
+    padding: 0.125rem 1rem 0.25rem;
+    border-bottom: 0.25rem solid var(--bead, var(--yellow));
+    border-radius: var(--r-paper);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.5rem, 5vw, 2.75rem);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: var(--drop-high);
+    pointer-events: none;
+    translate: -50% -50%;
+    rotate: -3deg;
+    animation: called 1100ms var(--ease-slow) both;
+  }
+  .callout[data-who='rival'] {
+    rotate: 2.5deg;
+  }
+  @keyframes called {
+    0% {
+      opacity: 0;
+      scale: 1.35;
+    }
+    14% {
+      opacity: 1;
+      scale: 1;
+    }
+    72% {
+      opacity: 1;
+      scale: 1;
+    }
+    100% {
+      opacity: 0;
+      scale: 0.96;
+    }
+  }
+
+  /* ---------- One side of it ---------- */
+  .seat {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'who prizes' 'piles piles' 'bench bench' 'front front';
+    align-items: start;
+    gap: 0.375rem 0.625rem;
+    min-width: 0;
+  }
+  .seat[data-who='you'] {
+    grid-template-areas: 'front front' 'bench bench' 'piles piles' 'who prizes';
+  }
+  .seat__who {
+    grid-area: who;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  .seat__who .stamp {
+    width: 2rem;
+    font-size: 0.8125rem;
+    color: var(--on-mat);
+  }
+  .seat__name {
+    min-width: 0;
+    overflow: hidden;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .seat__hand {
+    font-size: 0.875rem;
+    color: var(--on-mat-2);
+    white-space: nowrap;
+  }
+  .seat__hand .label,
+  .seat__prizes .label,
+  .pile .label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--on-mat-2);
+  }
+  /* the Prize cards still to be taken: one small card for each */
+  .seat__prizes {
+    grid-area: prizes;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+  }
+  .prizes {
+    display: grid;
+    grid-template-columns: repeat(6, 0.625rem);
+    gap: 0.125rem;
+  }
+  .prizes i {
+    aspect-ratio: 63 / 88;
+    border-radius: 1.5px;
+    outline: 1px solid var(--zone);
+    outline-offset: -1px;
+  }
+  .prizes i[data-left] {
+    background: var(--red);
+    outline-color: var(--paper);
+    box-shadow: 0 1px 1px var(--shade-mid);
+  }
+
+  /* a place for a card, printed on the mat: it stays where it is when the card leaves */
+  .zone {
+    position: relative;
+    width: var(--bench-w);
+    aspect-ratio: 63 / 88;
+    border-radius: 0.3125rem;
+    outline: 1px solid var(--zone);
+    outline-offset: 0.125rem;
+  }
+  .zone--active {
+    flex: none;
+    width: var(--active-w);
+  }
+  /* an empty place on the Bench that the card in the hand can go to */
+  .zone__put {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0.125rem;
+    border: 2px dashed var(--yellow);
+    border-radius: inherit;
+    color: var(--yellow);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.75rem;
+    line-height: 1.1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .zone__put:active {
+    background: color-mix(in oklab, var(--yellow) 20%, transparent);
+  }
+  .seat__front {
+    grid-area: front;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    min-width: 0;
+    padding: 0.125rem;
+  }
+
+  /* the card lying in a place */
+  .spot {
+    position: relative;
+    min-width: 0;
+  }
+  .spot__card {
+    display: block;
+    width: 100%;
+    border-radius: 0.3125rem;
+    cursor: zoom-in;
+    transition:
+      transform 180ms var(--ease-out),
+      box-shadow 180ms ease;
+  }
+  .spot__card:focus-visible {
+    outline-offset: 5px;
+  }
+  /* a Pokémon that has evolved lies on the card it came from */
+  .spot[data-deep]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: var(--r-card);
+    background: var(--paper-2);
+    box-shadow: 0 1px 2px var(--shade-mid);
+    transform: translate3d(-0.1875rem, -0.25rem, 0) rotate(-3deg);
+  }
+  /* one of the Pokémon a choice is being made between, and the one chosen */
+  .spot[data-state] .spot__card {
+    cursor: pointer;
+    box-shadow: 0 0 0 2px var(--yellow);
+  }
+  .spot[data-state='picked'] .spot__card {
+    transform: translate3d(0, -0.25rem, 0);
+    box-shadow: 0 0 0 4px var(--yellow);
+  }
+  /* what is known about a Pokémon on the Bench, written across the foot of its card */
+  .spot__facts {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 4;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.125rem;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0 0 0.25rem 0.25rem;
+    background: color-mix(in oklab, var(--mat) 86%, transparent);
+    color: var(--on-mat);
+    font-size: 0.75rem;
+    line-height: 1.2;
+    pointer-events: none;
+  }
+  .spot__facts b[data-low] {
+    color: var(--k-fire);
+  }
+  .spot__facts .pips {
+    gap: 1px;
+  }
+  .spot__facts .bead {
+    width: 0.4375rem;
+  }
+  /* a Pokémon that has just been hit flinches, when the attack lands */
+  html.live .spot[data-shaken] {
+    animation: flinch 360ms var(--ease-out);
+  }
+  html.live .mat[data-struck] .spot[data-shaken] {
+    animation-delay: 320ms;
+  }
+  @keyframes flinch {
+    0% {
+      transform: translate3d(0, 0, 0) rotate(0);
+    }
+    25% {
+      transform: translate3d(-0.375rem, 0.125rem, 0) rotate(-2.5deg);
+    }
+    60% {
+      transform: translate3d(0.25rem, 0, 0) rotate(1.5deg);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0);
+    }
+  }
+  /* a Pokémon that has been Knocked Out tips over and is taken off the mat */
+  html.live .spot[data-fallen] {
+    animation: fallen 440ms var(--ease-out) 420ms both;
+  }
+  @keyframes fallen {
+    to {
+      opacity: 0;
+      transform: translate3d(0, 0.75rem, 0) rotate(9deg) scale(0.92);
+      filter: grayscale(1);
+    }
+  }
+  /* what has just happened to a card, written over it for a moment */
+  .marks {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 0.25rem;
+    pointer-events: none;
+  }
+  .mark {
+    padding: 0.125rem 0.625rem;
+    border-radius: var(--r-paper);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.75rem;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: var(--drop);
+    animation: marked 1500ms var(--ease-slow) both;
+    animation-delay: calc(var(--n, 0) * 120ms);
+  }
+  .mark[data-late] {
+    animation-delay: calc(320ms + var(--n, 0) * 120ms);
+  }
+  .mark[data-tone='hard'] {
+    background: var(--red);
+    color: var(--on-red);
+    font-size: 2.25rem;
+  }
+  .mark[data-tone='heal'] {
+    background: var(--k-grass);
+    color: var(--on-yellow);
+  }
+  .mark[data-tone='ail'],
+  .mark[data-tone='note'] {
+    font-size: 1.125rem;
+  }
+  .spot--small .mark {
+    padding-inline: 0.375rem;
+    font-size: 1.0625rem;
+  }
+  @keyframes marked {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 0.5rem, 0) scale(0.8) rotate(-4deg);
+    }
+    12% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1) rotate(-4deg);
+    }
+    70% {
+      opacity: 1;
+      transform: translate3d(0, -0.5rem, 0) scale(1) rotate(-4deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(0, -1.25rem, 0) scale(1) rotate(-4deg);
+    }
+  }
+
+  /* the tag beside the Active Pokémon: its name, its hit points, its Energy, what ails it */
+  .tag {
+    flex: 1 1 0;
+    display: grid;
+    align-content: start;
+    gap: 0.375rem;
+    min-width: 0;
+    max-width: 16rem;
+    padding: 0.5rem 0.625rem;
+  }
+  .tag--none {
+    visibility: hidden;
+  }
+  .tag__name {
+    overflow: hidden;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.125rem;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .health {
+    display: grid;
+    gap: 0.25rem;
+    font-size: 1.0625rem;
+    line-height: 1;
+  }
+  .health__of {
+    font-weight: 400;
+    font-size: 0.8125rem;
+    color: var(--ink-2);
+  }
+  .health__bar {
+    display: block;
+    height: 0.375rem;
+    overflow: clip;
+    border-radius: var(--r-paper);
+    background: var(--rule);
+  }
+  .health__bar i {
+    display: block;
+    height: 100%;
+    background: var(--ink);
+    transform-origin: left;
+    transition: transform 500ms var(--ease-out);
+  }
+  .health[data-low] .health__bar i {
+    background: var(--red);
+  }
+  .tag__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: 1rem;
+  }
+  .tag .bead {
+    width: 0.75rem;
+  }
+  .troubles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.125rem 0.5rem;
+  }
+  .trouble {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--red);
+  }
+  /* on a narrow table the attacks are chosen here, beside the Pokémon that makes them */
+  .tag__acts {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+    padding-top: 0.25rem;
+  }
+  .tag__attack {
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
+    padding-inline: 0.5rem;
+    font-size: 0.875rem;
+    text-align: left;
+  }
+  .tag__attack span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* the five places of the Bench */
+  .bench {
+    grid-area: bench;
+    display: flex;
+    justify-content: center;
+    gap: clamp(0.375rem, 1.6vw, 0.75rem);
+    min-width: 0;
+    padding: 0.125rem;
+  }
+  .bench li {
+    flex: none;
+  }
+
+  /* the deck and the discard pile */
+  .piles {
+    grid-area: piles;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.25rem;
+  }
+  .pile {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 2.75rem;
+    font-size: 0.875rem;
+    line-height: 1.1;
+    text-align: left;
+    color: var(--on-mat);
+  }
+  button.pile {
+    cursor: zoom-in;
+  }
+  button.pile:disabled {
+    cursor: default;
+  }
+  .pile__card {
+    grid-row: span 2;
+    display: none;
+    width: var(--pile-w);
+    aspect-ratio: 63 / 88;
+    border-radius: 0.1875rem;
+    outline: 1px solid var(--zone);
+    outline-offset: 1px;
+  }
+  .pile__card .card {
+    box-shadow: 0 1px 2px var(--shade-mid);
+  }
+  .pile__card .card--back {
+    background: var(--red);
+    box-shadow:
+      inset 0 0 0 0.125rem var(--paper),
+      0.0625rem 0.0625rem 0 var(--paper-2),
+      0.125rem 0.125rem 0 var(--rule),
+      0 1px 2px var(--shade-mid);
+  }
+
+  /* between the two sides: the coin, and whose move it is */
+  .mid {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.125rem 0.75rem;
+    padding-block: 0.5rem;
+    border-block: 1px dashed var(--mat-line);
+  }
+  .mid .coin {
+    grid-row: span 2;
+    width: 2.5rem;
+  }
+  .mid__say {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--on-mat-2);
+  }
+  .mid[data-yours] .mid__say {
+    color: var(--yellow);
+  }
+  .mid__round {
+    font-size: 0.75rem;
+    color: var(--on-mat-2);
+    white-space: nowrap;
+  }
+
+  /* ---------- The hand: held at the bottom edge of the table, the cards showing over it ---------- */
+  .hand {
+    position: sticky;
+    bottom: 0;
+    z-index: 15;
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .hand__bar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    min-height: 3.25rem;
+    padding: 0.375rem 0.75rem;
+  }
+  .hand__say {
+    flex: 1 1 12rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  .hand__say strong {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .hand__acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+  .hand__cards {
+    position: relative;
+    display: flex;
+    /* the lower part of each card is below the edge of the table; the room above is for a card lifted out of the hand */
+    height: calc(var(--hand-w) * 88 / 63 * 0.72 + 1.75rem);
+    margin-top: -1.75rem;
+    padding: 1.75rem 0.25rem 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* the strip itself is not in the way of the bar above it; the cards are what is pressed */
+    pointer-events: none;
+    --w: var(--hand-w);
+  }
+  .hand__cards li {
+    position: relative;
+    flex: none;
+    width: var(--w);
+    pointer-events: auto;
+    transition: transform 180ms var(--ease-out);
+  }
+  /* the hand sits in the middle of the edge */
+  .hand__cards li:first-child {
+    margin-left: auto;
+  }
+  .hand__cards li:last-child {
+    margin-right: auto;
+  }
+  /* more cards than fit side by side are held overlapping, but never so far that one cannot be pressed: past that, the hand is slid sideways */
+  .hand__cards li + li {
+    margin-left: max(calc(2.75rem - var(--w)), min(0.375rem, calc((100% - var(--n) * var(--w)) / (var(--n) - 1))));
+  }
+  .handcard {
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: 0.3125rem;
+    cursor: pointer;
+    /* a card in the hand stands clear of whatever is under it */
+    box-shadow: 0 0 1.25rem 0.25rem var(--shade-deep);
+  }
+  .hand__cards li[data-dull] .card {
+    filter: saturate(0.6) brightness(0.78);
+  }
+  .hand__cards li[data-held],
+  .hand__cards li[data-chosen] {
+    z-index: 3;
+    transform: translate3d(0, -22%, 0);
+  }
+  .hand__cards li[data-held] .handcard,
+  .hand__cards li[data-chosen] .handcard {
+    box-shadow: 0 0 0 3px var(--yellow);
+  }
+  .handcard__tag {
+    position: absolute;
+    top: 0.25rem;
+    left: 50%;
+    z-index: 4;
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--r-paper);
+    background: var(--yellow);
+    color: var(--on-yellow);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    translate: -50% 0;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .hand__cards li:hover {
+      z-index: 2;
+      transform: translate3d(0, -14%, 0);
+    }
+    .hand__cards li[data-held]:hover,
+    .hand__cards li[data-chosen]:hover {
+      transform: translate3d(0, -22%, 0);
+    }
+  }
+  .hand__cards li:has(.handcard:focus-visible) {
+    z-index: 2;
+    transform: translate3d(0, -14%, 0);
+  }
+
+  /* ---------- The slip the attacks are chosen from: beside the mat, where there is room ---------- */
+  .moveslip {
+    display: none;
+    gap: 1rem;
+    min-width: 0;
+    padding: 1.25rem;
+  }
+  .moveslip h2 {
+    font-size: var(--t-h3);
+    letter-spacing: 0.03em;
+  }
+  .plays {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .play {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.25rem 0.75rem;
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border: 2px solid var(--ink);
+    border-left: 0.375rem solid var(--bead, var(--ink));
+    border-radius: var(--r-paper);
+    text-align: left;
+    cursor: pointer;
+    transition:
+      transform 140ms var(--ease-out),
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+  .play__name {
+    grid-area: 1 / 1;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.375rem;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .play__hit {
+    grid-area: 1 / 2;
+    font-size: 1.125rem;
+    white-space: nowrap;
+  }
+  .play[data-strong] .play__hit {
+    color: var(--red);
+  }
+  .play .pips {
+    grid-area: 2 / 1 / auto / -1;
+  }
+  .play__does {
+    grid-area: 3 / 1 / auto / -1;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+  .play__does:empty {
+    display: none;
+  }
+  .play:active:not(:disabled) {
+    transform: translateY(1px) scale(0.99);
+  }
+  .play:disabled {
+    border-color: var(--rule);
+    border-left-color: var(--rule);
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .play:not(:disabled):hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .play:not(:disabled):hover .play__does {
+      color: var(--paper-2);
+    }
+    .play[data-strong]:not(:disabled):hover .play__hit {
+      color: var(--yellow);
+    }
+  }
+  .moveslip__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--rule);
+  }
+  .moveslip__hint {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+
+  /* ---------- The slip the match is written down on ---------- */
+  .scoreslip {
+    display: grid;
+    gap: 0.875rem;
+    min-width: 0;
+    padding: 1.25rem;
+  }
+  .scoreslip h2 {
+    font-size: var(--t-h3);
+    letter-spacing: 0.03em;
+  }
+  .scoreslip__top {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .scoreslip__top > div {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .scoreslip__top dt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .scoreslip__top dd {
+    font-size: 1.375rem;
+    line-height: 1;
+  }
+  .lines {
+    display: grid;
+    align-content: start;
+    max-height: 16rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-block: 1px solid var(--rule);
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  /* a line half out of sight at the top fades, rather than being cut through */
+  @supports (animation-timeline: scroll()) {
+    .lines {
+      mask-image: linear-gradient(to bottom, transparent, var(--ink) var(--fade-top));
+      animation: fade-top linear both;
+      animation-timeline: scroll(self);
+      animation-range: 0 1.5rem;
+    }
+    @keyframes fade-top {
+      to {
+        --fade-top: 2rem;
+      }
+    }
+  }
+  .lines li {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.5rem;
+    padding-block: 0.375rem;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .lines li:last-child {
+    border-bottom: 0;
+  }
+  .lines__n {
+    font-weight: 400;
+    color: var(--ink-2);
+  }
+  .lines li[data-who='rival'] {
+    color: var(--ink-2);
+  }
+  .lines li[data-loud] {
+    font-weight: 700;
+    color: var(--red);
+  }
+  .scoreslip__foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 1rem;
+    font-size: 0.875rem;
+  }
+  .scoreslip__foot .link,
+  .verdict__leave {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    cursor: pointer;
+  }
+
+  /* ---------- When it is over: the slip, stamped ---------- */
+  .verdict {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    overflow-y: auto;
+    background: var(--shade-deep);
+  }
+  .verdict__slip {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+    width: min(100%, 30rem);
+    padding: clamp(1.25rem, 4vw, 2rem);
+    transform: rotate(-1.2deg);
+    box-shadow: var(--drop-high);
+  }
+  .verdict .stamp--word {
+    font-size: clamp(2.25rem, 9vw, 3.5rem);
+    color: var(--ink);
+  }
+  .verdict .stamp--word[data-won] {
+    color: var(--red);
+  }
+  .verdict dl {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+    padding-block: 1rem;
+    border-block: 1px solid var(--rule);
+  }
+  .verdict dl > div {
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+  }
+  .verdict dd {
+    font-size: 1.375rem;
+  }
+  .verdict__kinds {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+  .verdict__acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .verdict__leave {
+    margin-top: -0.75rem;
+    font-size: 0.9375rem;
+  }
+  html.live .verdict {
+    animation: dimmed 300ms ease both;
+  }
+  html.live .verdict__slip {
+    animation: laid-slip 520ms var(--ease-slow) 200ms both;
+  }
+  html.live .verdict .stamp--word {
+    animation: stamped-word 260ms var(--ease-out) 760ms both;
+  }
+  @keyframes dimmed {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes laid-slip {
+    from {
+      opacity: 0;
+      transform: rotate(-5deg) translate3d(0, 2rem, 0);
+    }
+  }
+  @keyframes stamped-word {
+    from {
+      opacity: 0;
+      transform: rotate(-7deg) scale(1.6);
+    }
+  }
+
+  /* ---------- Wider: each side in two rows, its Prize cards on one hand and its piles on the other ---------- */
+  @media (min-width: 40rem) {
+    .duel {
+      /* a short window gets smaller cards, so that the mat and the hand stay in sight together */
+      --active-w: min(9rem, 14svh);
+      --bench-w: min(4.75rem, 7.5svh);
+      --pile-w: min(3rem, 5.5svh);
+      --hand-w: min(5.75rem, 10svh);
+    }
+    .mat {
+      gap: 0.625rem;
+    }
+    .seat,
+    .seat[data-who='you'] {
+      grid-template-columns: 6.5rem minmax(0, 1fr) 6.5rem;
+      grid-template-areas: 'prizes bench piles' 'who front piles';
+      align-items: center;
+      gap: 0.625rem 1rem;
+    }
+    .seat[data-who='you'] {
+      grid-template-areas: 'who front piles' 'prizes bench piles';
+    }
+    .seat__who {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.375rem;
+    }
+    .seat__who .stamp {
+      width: 2.5rem;
+      font-size: 0.9375rem;
+    }
+    .seat__prizes {
+      flex-wrap: wrap;
+      gap: 0.25rem 0.5rem;
+    }
+    .seat__prizes .label {
+      width: 100%;
+    }
+    .prizes {
+      grid-template-columns: repeat(3, 1.375rem);
+      gap: 0.25rem;
+    }
+    .prizes i {
+      border-radius: 2px;
+    }
+    .prizes i[data-left] {
+      box-shadow:
+        inset 0 0 0 1.5px var(--paper),
+        0 1px 2px var(--shade-mid);
+    }
+    .seat__front {
+      justify-content: center;
+      gap: 1rem;
+    }
+    .tag {
+      flex: 0 1 11.5rem;
+      padding: 0.625rem 0.75rem;
+    }
+    .tag__name {
+      font-size: 1.25rem;
+    }
+    .piles {
+      display: grid;
+      justify-self: end;
+      gap: 0.625rem;
+    }
+    .pile {
+      display: grid;
+      grid-template-columns: var(--pile-w) auto;
+      gap: 0 0.375rem;
+      min-height: 0;
+    }
+    .pile__card {
+      display: block;
+    }
+    .spot__facts {
+      font-size: 0.8125rem;
+    }
+    .spot__facts .bead {
+      width: 0.5rem;
+    }
+    .mid {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 0.75rem 1rem;
+    }
+    .mid .coin {
+      grid-row: auto;
+    }
+    .mid__say {
+      font-size: 1.125rem;
+    }
+    .mid__round {
+      font-size: 0.875rem;
+    }
+    .hand__say {
+      font-size: 0.9375rem;
+    }
+  }
+
+  /* ---------- Wide enough for the slips to lie beside the mat ---------- */
+  @media (min-width: 72rem) {
+    .duel {
+      grid-template-columns: minmax(0, 1fr) 19rem;
+      grid-template-rows: auto 1fr;
+      grid-template-areas: 'main moves' 'main score';
+      gap: 1.25rem;
+    }
+    .duel__main {
+      grid-area: main;
+    }
+    .moveslip {
+      grid-area: moves;
+      display: grid;
+      transform: rotate(0.5deg);
+    }
+    .scoreslip {
+      grid-area: score;
+      transform: rotate(-0.6deg);
+    }
+    /* the attacks are on the slip, so the tag keeps to what it knows */
+    .tag__acts {
+      display: none;
+    }
+    .lines {
+      max-height: 15rem;
+    }
+  }
+  @media (min-width: 88rem) {
+    .lines {
+      max-height: 20rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .health__bar i,
+  .play,
+  .spot__card,
+  .hand__cards li {
+    transition: none;
+  }
+  .spot[data-state='picked'] .spot__card,
+  .hand__cards li[data-held],
+  .hand__cards li[data-chosen] {
+    transform: none;
+  }
+  .mark,
+  .callout {
+    animation: none !important;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,3421 @@
+[
+ {
+  "id": "cel25-5",
+  "name": "Pikachu",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 60,
+  "type": "Lightning",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Gnaw",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Thunder Jolt",
+    "cost": [
+     "Lightning",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [
+     {
+      "t": "recoil",
+      "amount": 10,
+      "flipTails": true
+     }
+    ],
+    "text": "Flip a coin. If tails, this Pokémon also does 10 damage to itself."
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Rare Holo",
+  "small": "https://images.pokemontcg.io/cel25/5.png",
+  "large": "https://images.pokemontcg.io/cel25/5_hires.png"
+ },
+ {
+  "id": "pgo-1",
+  "name": "Bulbasaur",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Grass",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Vine Whip",
+    "cost": [
+     "Grass"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Razor Leaf",
+    "cost": [
+     "Grass",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fire",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/pgo/1.png",
+  "large": "https://images.pokemontcg.io/pgo/1_hires.png"
+ },
+ {
+  "id": "pgo-9",
+  "name": "Charmeleon",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Charmander",
+  "hp": 90,
+  "type": "Fire",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Scratch",
+    "cost": [
+     "Fire",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Flamethrower",
+    "cost": [
+     "Fire",
+     "Fire",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 100,
+    "mark": "",
+    "effects": [
+     {
+      "t": "discardSelf",
+      "count": 1,
+      "kind": "Fire"
+     }
+    ],
+    "text": "Discard a Fire Energy from this Pokémon."
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/pgo/9.png",
+  "large": "https://images.pokemontcg.io/pgo/9_hires.png"
+ },
+ {
+  "id": "pgo-15",
+  "name": "Squirtle",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Water",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Water Gun",
+    "cost": [
+     "Water"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Lightning",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/pgo/15.png",
+  "large": "https://images.pokemontcg.io/pgo/15_hires.png"
+ },
+ {
+  "id": "pgo-16",
+  "name": "Wartortle",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Squirtle",
+  "hp": 90,
+  "type": "Water",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Water Gun",
+    "cost": [
+     "Water"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Hydro Pump",
+    "cost": [
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "+",
+    "effects": [
+     {
+      "t": "perEnergySelf",
+      "each": 10,
+      "kind": "Water",
+      "plus": true
+     }
+    ],
+    "text": "This attack does 10 more damage for each Water Energy attached to this Pokémon."
+   }
+  ],
+  "weak": "Lightning",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/pgo/16.png",
+  "large": "https://images.pokemontcg.io/pgo/16_hires.png"
+ },
+ {
+  "id": "pgo-23",
+  "name": "Lapras",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 120,
+  "type": "Water",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Ice Beam",
+    "cost": [
+     "Water"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [
+     {
+      "t": "status",
+      "status": "paralyzed",
+      "flip": true
+     }
+    ],
+    "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+   },
+   {
+    "name": "Surf",
+    "cost": [
+     "Water",
+     "Water",
+     "Colorless"
+    ],
+    "damage": 110,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Lightning",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Rare Holo",
+  "small": "https://images.pokemontcg.io/pgo/23.png",
+  "large": "https://images.pokemontcg.io/pgo/23_hires.png"
+ },
+ {
+  "id": "pgo-28",
+  "name": "Pikachu",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Lightning",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Wild Charge",
+    "cost": [
+     "Lightning",
+     "Lightning",
+     "Colorless"
+    ],
+    "damage": 90,
+    "mark": "",
+    "effects": [
+     {
+      "t": "recoil",
+      "amount": 30
+     }
+    ],
+    "text": "This Pokémon also does 30 damage to itself."
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Rare Holo",
+  "small": "https://images.pokemontcg.io/pgo/28.png",
+  "large": "https://images.pokemontcg.io/pgo/28_hires.png"
+ },
+ {
+  "id": "pgo-36",
+  "name": "Onix",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 120,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Rock Tomb",
+    "cost": [
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "",
+    "effects": [
+     {
+      "t": "trap"
+     }
+    ],
+    "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+   },
+   {
+    "name": "Raging Swing",
+    "cost": [
+     "Fighting",
+     "Fighting",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "×",
+    "effects": [
+     {
+      "t": "perCounterSelf",
+      "each": 50,
+      "plus": false
+     }
+    ],
+    "text": "This attack does 50 damage for each damage counter on this Pokémon."
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 4,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/pgo/36.png",
+  "large": "https://images.pokemontcg.io/pgo/36_hires.png"
+ },
+ {
+  "id": "swsh1-11",
+  "name": "Grookey",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Grass",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Scratch",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Beat",
+    "cost": [
+     "Grass",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fire",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh1/11.png",
+  "large": "https://images.pokemontcg.io/swsh1/11_hires.png"
+ },
+ {
+  "id": "swsh1-12",
+  "name": "Thwackey",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Grookey",
+  "hp": 100,
+  "type": "Grass",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Taunt",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 0,
+    "mark": "",
+    "effects": [
+     {
+      "t": "gust",
+      "then": 0
+     }
+    ],
+    "text": "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon."
+   },
+   {
+    "name": "Double Hit",
+    "cost": [
+     "Grass",
+     "Grass",
+     "Colorless"
+    ],
+    "damage": 60,
+    "mark": "×",
+    "effects": [
+     {
+      "t": "flipTimes",
+      "coins": 2,
+      "each": 60
+     }
+    ],
+    "text": "Flip 2 coins. This attack does 60 damage for each heads."
+   }
+  ],
+  "weak": "Fire",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh1/12.png",
+  "large": "https://images.pokemontcg.io/swsh1/12_hires.png"
+ },
+ {
+  "id": "swsh1-15",
+  "name": "Rillaboom",
+  "sort": "pokemon",
+  "stage": "stage2",
+  "from": "Thwackey",
+  "hp": 190,
+  "type": "Grass",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Drum Roll",
+    "cost": [
+     "Grass",
+     "Grass",
+     "Colorless"
+    ],
+    "damage": 90,
+    "mark": "",
+    "effects": [
+     {
+      "t": "bench",
+      "amount": 10,
+      "scope": "each"
+     }
+    ],
+    "text": "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+   },
+   {
+    "name": "Drum Beating",
+    "cost": [
+     "Grass",
+     "Grass",
+     "Grass",
+     "Colorless"
+    ],
+    "damage": 180,
+    "mark": "",
+    "effects": [
+     {
+      "t": "lock",
+      "attack": "Drum Beating"
+     }
+    ],
+    "text": "During your next turn, this Pokémon can't use Drum Beating."
+   }
+  ],
+  "weak": "Fire",
+  "resist": null,
+  "retreat": 4,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh1/15.png",
+  "large": "https://images.pokemontcg.io/swsh1/15_hires.png"
+ },
+ {
+  "id": "swsh1-66",
+  "name": "Raichu",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Pikachu",
+  "hp": 130,
+  "type": "Lightning",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Pain-Full Punch",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 40,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Mach Bolt",
+    "cost": [
+     "Lightning",
+     "Lightning",
+     "Colorless"
+    ],
+    "damage": 120,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh1/66.png",
+  "large": "https://images.pokemontcg.io/swsh1/66_hires.png"
+ },
+ {
+  "id": "swsh1-84",
+  "name": "Haunter",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Gastly",
+  "hp": 70,
+  "type": "Psychic",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Nightmare",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [
+     {
+      "t": "status",
+      "status": "asleep"
+     }
+    ],
+    "text": "Your opponent's Active Pokémon is now Asleep."
+   },
+   {
+    "name": "Spooky Shot",
+    "cost": [
+     "Psychic",
+     "Colorless"
+    ],
+    "damage": 40,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Darkness",
+  "resist": "Fighting",
+  "retreat": 1,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh1/84.png",
+  "large": "https://images.pokemontcg.io/swsh1/84_hires.png"
+ },
+ {
+  "id": "swsh1-92",
+  "name": "Diglett",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 60,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Scratch",
+    "cost": [
+     "Fighting"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh1/92.png",
+  "large": "https://images.pokemontcg.io/swsh1/92_hires.png"
+ },
+ {
+  "id": "swsh1-159",
+  "name": "Crushing Hammer",
+  "sort": "item",
+  "effect": "hammer",
+  "text": "Flip a coin. If heads, discard an Energy from 1 of your opponent's Pokémon.",
+  "small": "https://images.pokemontcg.io/swsh1/159.png",
+  "large": "https://images.pokemontcg.io/swsh1/159_hires.png"
+ },
+ {
+  "id": "swsh1-160",
+  "name": "Energy Retrieval",
+  "sort": "item",
+  "effect": "retrieval",
+  "text": "Put up to 2 basic Energy cards from your discard pile into your hand.",
+  "small": "https://images.pokemontcg.io/swsh1/160.png",
+  "large": "https://images.pokemontcg.io/swsh1/160_hires.png"
+ },
+ {
+  "id": "swsh1-161",
+  "name": "Energy Search",
+  "sort": "item",
+  "effect": "energysearch",
+  "text": "Search your deck for a basic Energy card, reveal it, and put it into your hand. Then, shuffle your deck.",
+  "small": "https://images.pokemontcg.io/swsh1/161.png",
+  "large": "https://images.pokemontcg.io/swsh1/161_hires.png"
+ },
+ {
+  "id": "swsh1-163",
+  "name": "Evolution Incense",
+  "sort": "item",
+  "effect": "incense",
+  "text": "Search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
+  "small": "https://images.pokemontcg.io/swsh1/163.png",
+  "large": "https://images.pokemontcg.io/swsh1/163_hires.png"
+ },
+ {
+  "id": "swsh1-164",
+  "name": "Great Ball",
+  "sort": "item",
+  "effect": "greatball",
+  "text": "Look at the top 7 cards of your deck. You may reveal a Pokémon you find there and put it into your hand. Shuffle the other cards back into your deck.",
+  "small": "https://images.pokemontcg.io/swsh1/164.png",
+  "large": "https://images.pokemontcg.io/swsh1/164_hires.png"
+ },
+ {
+  "id": "swsh1-165",
+  "name": "Hop",
+  "sort": "supporter",
+  "effect": "hop",
+  "text": "Draw 3 cards.",
+  "small": "https://images.pokemontcg.io/swsh1/165.png",
+  "large": "https://images.pokemontcg.io/swsh1/165_hires.png"
+ },
+ {
+  "id": "swsh1-169",
+  "name": "Marnie",
+  "sort": "supporter",
+  "effect": "marnie",
+  "text": "Each player shuffles their hand and puts it on the bottom of their deck. If either player put any cards on the bottom of their deck in this way, you draw 5 cards, and your opponent draws 4 cards.",
+  "small": "https://images.pokemontcg.io/swsh1/169.png",
+  "large": "https://images.pokemontcg.io/swsh1/169_hires.png"
+ },
+ {
+  "id": "swsh1-175",
+  "name": "Pokémon Catcher",
+  "sort": "item",
+  "effect": "catcher",
+  "text": "Flip a coin. If heads, switch 1 of your opponent's Benched Pokémon with their Active Pokémon.",
+  "small": "https://images.pokemontcg.io/swsh1/175.png",
+  "large": "https://images.pokemontcg.io/swsh1/175_hires.png"
+ },
+ {
+  "id": "swsh1-176",
+  "name": "Pokémon Center Lady",
+  "sort": "supporter",
+  "effect": "lady",
+  "text": "Heal 60 damage from 1 of your Pokémon, and it recovers from all Special Conditions.",
+  "small": "https://images.pokemontcg.io/swsh1/176.png",
+  "large": "https://images.pokemontcg.io/swsh1/176_hires.png"
+ },
+ {
+  "id": "swsh1-177",
+  "name": "Potion",
+  "sort": "item",
+  "effect": "potion",
+  "text": "Heal 30 damage from 1 of your Pokémon.",
+  "small": "https://images.pokemontcg.io/swsh1/177.png",
+  "large": "https://images.pokemontcg.io/swsh1/177_hires.png"
+ },
+ {
+  "id": "swsh1-179",
+  "name": "Quick Ball",
+  "sort": "item",
+  "effect": "quickball",
+  "text": "You can play this card only if you discard another card from your hand. Search your deck for a Basic Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
+  "small": "https://images.pokemontcg.io/swsh1/179.png",
+  "large": "https://images.pokemontcg.io/swsh1/179_hires.png"
+ },
+ {
+  "id": "swsh1-183",
+  "name": "Switch",
+  "sort": "item",
+  "effect": "switch",
+  "text": "Switch your Active Pokémon with 1 of your Benched Pokémon.",
+  "small": "https://images.pokemontcg.io/swsh1/183.png",
+  "large": "https://images.pokemontcg.io/swsh1/183_hires.png"
+ },
+ {
+  "id": "swsh1-193",
+  "name": "Stonjourner V",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 220,
+  "type": "Fighting",
+  "rule": "v",
+  "prize": 2,
+  "attacks": [
+   {
+    "name": "Guard Press",
+    "cost": [
+     "Fighting"
+    ],
+    "damage": 40,
+    "mark": "",
+    "effects": [
+     {
+      "t": "less",
+      "amount": 20
+     }
+    ],
+    "text": "During your opponent's next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance)."
+   },
+   {
+    "name": "Mega Kick",
+    "cost": [
+     "Fighting",
+     "Fighting",
+     "Fighting"
+    ],
+    "damage": 150,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 3,
+  "rarity": "Rare Ultra",
+  "small": "https://images.pokemontcg.io/swsh1/193.png",
+  "large": "https://images.pokemontcg.io/swsh1/193_hires.png"
+ },
+ {
+  "id": "swsh2-24",
+  "name": "Vulpix",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 60,
+  "type": "Fire",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Confuse Ray",
+    "cost": [
+     "Fire"
+    ],
+    "damage": 0,
+    "mark": "",
+    "effects": [
+     {
+      "t": "status",
+      "status": "confused"
+     }
+    ],
+    "text": "Your opponent's Active Pokémon is now Confused."
+   },
+   {
+    "name": "Smash Kick",
+    "cost": [
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh2/24.png",
+  "large": "https://images.pokemontcg.io/swsh2/24_hires.png"
+ },
+ {
+  "id": "swsh2-25",
+  "name": "Ninetales",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Vulpix",
+  "hp": 120,
+  "type": "Fire",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Hex",
+    "cost": [
+     "Fire"
+    ],
+    "damage": 30,
+    "mark": "+",
+    "effects": [
+     {
+      "t": "ifOppAiling",
+      "add": 90
+     }
+    ],
+    "text": "If your opponent's Active Pokémon is affected by a Special Condition, this attack does 90 more damage."
+   },
+   {
+    "name": "Flickering Flames",
+    "cost": [
+     "Fire",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 90,
+    "mark": "",
+    "effects": [
+     {
+      "t": "status",
+      "status": "asleep"
+     }
+    ],
+    "text": "Your opponent's Active Pokémon is now Asleep."
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh2/25.png",
+  "large": "https://images.pokemontcg.io/swsh2/25_hires.png"
+ },
+ {
+  "id": "swsh2-58",
+  "name": "Electabuzz",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 90,
+  "type": "Lightning",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Knuckle Punch",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Electroslug",
+    "cost": [
+     "Lightning",
+     "Lightning",
+     "Colorless"
+    ],
+    "damage": 70,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh2/58.png",
+  "large": "https://images.pokemontcg.io/swsh2/58_hires.png"
+ },
+ {
+  "id": "swsh2-154",
+  "name": "Boss's Orders",
+  "sort": "supporter",
+  "effect": "boss",
+  "text": "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon.",
+  "small": "https://images.pokemontcg.io/swsh2/154.png",
+  "large": "https://images.pokemontcg.io/swsh2/154_hires.png"
+ },
+ {
+  "id": "swsh3-57",
+  "name": "Ampharos",
+  "sort": "pokemon",
+  "stage": "stage2",
+  "from": "Flaaffy",
+  "hp": 150,
+  "type": "Lightning",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Dazzle Blast",
+    "cost": [
+     "Lightning"
+    ],
+    "damage": 50,
+    "mark": "",
+    "effects": [
+     {
+      "t": "status",
+      "status": "confused"
+     }
+    ],
+    "text": "Your opponent's Active Pokémon is now Confused."
+   },
+   {
+    "name": "Electric Ball",
+    "cost": [
+     "Lightning",
+     "Lightning"
+    ],
+    "damage": 130,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh3/57.png",
+  "large": "https://images.pokemontcg.io/swsh3/57_hires.png"
+ },
+ {
+  "id": "swsh3-67",
+  "name": "Jigglypuff",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Psychic",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Mumble",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Moon Kick",
+    "cost": [
+     "Psychic",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Metal",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh3/67.png",
+  "large": "https://images.pokemontcg.io/swsh3/67_hires.png"
+ },
+ {
+  "id": "swsh3-68",
+  "name": "Wigglytuff",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Jigglypuff",
+  "hp": 120,
+  "type": "Psychic",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Sleep Pulse",
+    "cost": [
+     "Psychic"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [
+     {
+      "t": "status",
+      "status": "asleep"
+     }
+    ],
+    "text": "Your opponent's Active Pokémon is now Asleep."
+   },
+   {
+    "name": "Double Smash",
+    "cost": [
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 90,
+    "mark": "×",
+    "effects": [
+     {
+      "t": "flipTimes",
+      "coins": 2,
+      "each": 90
+     }
+    ],
+    "text": "Flip 2 coins. This attack does 90 damage for each heads."
+   }
+  ],
+  "weak": "Metal",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh3/68.png",
+  "large": "https://images.pokemontcg.io/swsh3/68_hires.png"
+ },
+ {
+  "id": "swsh3-71",
+  "name": "Granbull",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Snubbull",
+  "hp": 130,
+  "type": "Psychic",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Jaw Lock",
+    "cost": [
+     "Psychic",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "",
+    "effects": [
+     {
+      "t": "trap"
+     }
+    ],
+    "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+   },
+   {
+    "name": "Headbutt Bounce",
+    "cost": [
+     "Psychic",
+     "Psychic",
+     "Colorless"
+    ],
+    "damage": 130,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Metal",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh3/71.png",
+  "large": "https://images.pokemontcg.io/swsh3/71_hires.png"
+ },
+ {
+  "id": "swsh3-85",
+  "name": "Dugtrio",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Diglett",
+  "hp": 90,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Dig",
+    "cost": [
+     "Fighting"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [
+     {
+      "t": "protect",
+      "flip": true
+     }
+    ],
+    "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+   },
+   {
+    "name": "Mud Bomb",
+    "cost": [
+     "Fighting",
+     "Colorless"
+    ],
+    "damage": 70,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh3/85.png",
+  "large": "https://images.pokemontcg.io/swsh3/85_hires.png"
+ },
+ {
+  "id": "swsh3-122",
+  "name": "Lairon",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Aron",
+  "hp": 100,
+  "type": "Metal",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Knock Away",
+    "cost": [
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "+",
+    "effects": [
+     {
+      "t": "flipMore",
+      "add": 30
+     }
+    ],
+    "text": "Flip a coin. If heads, this attack does 30 more damage."
+   },
+   {
+    "name": "Lunge Out",
+    "cost": [
+     "Metal",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fire",
+  "resist": "Grass",
+  "retreat": 3,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh3/122.png",
+  "large": "https://images.pokemontcg.io/swsh3/122_hires.png"
+ },
+ {
+  "id": "swsh4-23",
+  "name": "Charmander",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Fire",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Collect",
+    "cost": [
+     "Fire"
+    ],
+    "damage": 0,
+    "mark": "",
+    "effects": [
+     {
+      "t": "draw",
+      "count": 1
+     }
+    ],
+    "text": "Draw a card."
+   },
+   {
+    "name": "Flare",
+    "cost": [
+     "Fire",
+     "Fire"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh4/23.png",
+  "large": "https://images.pokemontcg.io/swsh4/23_hires.png"
+ },
+ {
+  "id": "swsh4-90",
+  "name": "Riolu",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Best Punch",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [
+     {
+      "t": "flipFail"
+     }
+    ],
+    "text": "Flip a coin. If tails, this attack does nothing."
+   }
+  ],
+  "weak": "Psychic",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh4/90.png",
+  "large": "https://images.pokemontcg.io/swsh4/90_hires.png"
+ },
+ {
+  "id": "swsh4-109",
+  "name": "Krookodile",
+  "sort": "pokemon",
+  "stage": "stage2",
+  "from": "Krokorok",
+  "hp": 150,
+  "type": "Darkness",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Dredge Up",
+    "cost": [
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 0,
+    "mark": "",
+    "effects": [
+     {
+      "t": "millOpp",
+      "count": 3
+     }
+    ],
+    "text": "Discard the top 3 cards of your opponent's deck."
+   },
+   {
+    "name": "Tantrum",
+    "cost": [
+     "Darkness",
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 180,
+    "mark": "",
+    "effects": [
+     {
+      "t": "statusSelf",
+      "status": "confused"
+     }
+    ],
+    "text": "This Pokémon is now Confused."
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 3,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh4/109.png",
+  "large": "https://images.pokemontcg.io/swsh4/109_hires.png"
+ },
+ {
+  "id": "swsh4-116",
+  "name": "Beldum",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Metal",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Call for Family",
+    "cost": [
+     "Metal"
+    ],
+    "damage": 0,
+    "mark": "",
+    "effects": [
+     {
+      "t": "call",
+      "count": 2
+     }
+    ],
+    "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+   },
+   {
+    "name": "Ram",
+    "cost": [
+     "Metal",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fire",
+  "resist": "Grass",
+  "retreat": 2,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh4/116.png",
+  "large": "https://images.pokemontcg.io/swsh4/116_hires.png"
+ },
+ {
+  "id": "swsh4-117",
+  "name": "Metang",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Beldum",
+  "hp": 100,
+  "type": "Metal",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Metal Claw",
+    "cost": [
+     "Metal",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Magnetic Blast",
+    "cost": [
+     "Metal",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 60,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fire",
+  "resist": "Grass",
+  "retreat": 3,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh4/117.png",
+  "large": "https://images.pokemontcg.io/swsh4/117_hires.png"
+ },
+ {
+  "id": "swsh4-120",
+  "name": "Lucario",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Riolu",
+  "hp": 130,
+  "type": "Metal",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Spike Draw",
+    "cost": [
+     "Metal"
+    ],
+    "damage": 40,
+    "mark": "",
+    "effects": [
+     {
+      "t": "draw",
+      "count": 1
+     }
+    ],
+    "text": "Draw a card."
+   },
+   {
+    "name": "Knuckle Impact",
+    "cost": [
+     "Metal",
+     "Metal",
+     "Colorless"
+    ],
+    "damage": 160,
+    "mark": "",
+    "effects": [
+     {
+      "t": "lock"
+     }
+    ],
+    "text": "During your next turn, this Pokémon can't attack."
+   }
+  ],
+  "weak": "Fire",
+  "resist": "Grass",
+  "retreat": 2,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh4/120.png",
+  "large": "https://images.pokemontcg.io/swsh4/120_hires.png"
+ },
+ {
+  "id": "swsh5-32",
+  "name": "Seadra",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Horsea",
+  "hp": 90,
+  "type": "Water",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Water Gun",
+    "cost": [
+     "Water"
+    ],
+    "damage": 40,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Lightning",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh5/32.png",
+  "large": "https://images.pokemontcg.io/swsh5/32_hires.png"
+ },
+ {
+  "id": "swsh5-66",
+  "name": "Mankey",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 60,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Focus Fist",
+    "cost": [
+     "Fighting",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "",
+    "effects": [
+     {
+      "t": "flipFail"
+     }
+    ],
+    "text": "Flip a coin. If tails, this attack does nothing."
+   }
+  ],
+  "weak": "Psychic",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh5/66.png",
+  "large": "https://images.pokemontcg.io/swsh5/66_hires.png"
+ },
+ {
+  "id": "swsh5-89",
+  "name": "Zubat",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 50,
+  "type": "Darkness",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Hide in Shadows",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 0,
+    "mark": "",
+    "effects": [
+     {
+      "t": "switchSelf"
+     }
+    ],
+    "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+   },
+   {
+    "name": "Speed Dive",
+    "cost": [
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh5/89.png",
+  "large": "https://images.pokemontcg.io/swsh5/89_hires.png"
+ },
+ {
+  "id": "swsh6-48",
+  "name": "Flaaffy",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Mareep",
+  "hp": 100,
+  "type": "Lightning",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Electro Ball",
+    "cost": [
+     "Lightning",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh6/48.png",
+  "large": "https://images.pokemontcg.io/swsh6/48_hires.png"
+ },
+ {
+  "id": "swsh6-55",
+  "name": "Gastly",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 50,
+  "type": "Psychic",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Sleep Pulse",
+    "cost": [
+     "Psychic"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [
+     {
+      "t": "status",
+      "status": "asleep",
+      "flip": true
+     }
+    ],
+    "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Asleep."
+   }
+  ],
+  "weak": "Darkness",
+  "resist": "Fighting",
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh6/55.png",
+  "large": "https://images.pokemontcg.io/swsh6/55_hires.png"
+ },
+ {
+  "id": "swsh7-54",
+  "name": "Mareep",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 60,
+  "type": "Lightning",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Rear Kick",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Electro Ball",
+    "cost": [
+     "Lightning",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh7/54.png",
+  "large": "https://images.pokemontcg.io/swsh7/54_hires.png"
+ },
+ {
+  "id": "swsh7-171",
+  "name": "Gyarados V",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 220,
+  "type": "Water",
+  "rule": "v",
+  "prize": 2,
+  "attacks": [
+   {
+    "name": "Get Angry",
+    "cost": [
+     "Water",
+     "Water",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "×",
+    "effects": [
+     {
+      "t": "perCounterSelf",
+      "each": 20,
+      "plus": false
+     }
+    ],
+    "text": "This attack does 20 damage for each damage counter on this Pokémon."
+   },
+   {
+    "name": "Heavy Storm",
+    "cost": [
+     "Water",
+     "Water",
+     "Water",
+     "Colorless"
+    ],
+    "damage": 180,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Lightning",
+  "resist": null,
+  "retreat": 3,
+  "rarity": "Rare Ultra",
+  "small": "https://images.pokemontcg.io/swsh7/171.png",
+  "large": "https://images.pokemontcg.io/swsh7/171_hires.png"
+ },
+ {
+  "id": "swsh7-207",
+  "name": "Gyarados VMAX",
+  "sort": "pokemon",
+  "stage": "vmax",
+  "from": "Gyarados V",
+  "hp": 330,
+  "type": "Water",
+  "rule": "vmax",
+  "prize": 3,
+  "attacks": [
+   {
+    "name": "Hyper Beam",
+    "cost": [
+     "Water",
+     "Water",
+     "Colorless"
+    ],
+    "damage": 120,
+    "mark": "",
+    "effects": [
+     {
+      "t": "discardOpp"
+     }
+    ],
+    "text": "Discard an Energy from your opponent's Active Pokémon."
+   },
+   {
+    "name": "Max Tyrant",
+    "cost": [
+     "Water",
+     "Water",
+     "Water",
+     "Colorless"
+    ],
+    "damage": 240,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Lightning",
+  "resist": null,
+  "retreat": 4,
+  "rarity": "Rare Rainbow",
+  "small": "https://images.pokemontcg.io/swsh7/207.png",
+  "large": "https://images.pokemontcg.io/swsh7/207_hires.png"
+ },
+ {
+  "id": "swsh8-33",
+  "name": "Arcanine",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Growlithe",
+  "hp": 130,
+  "type": "Fire",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Fire Claws",
+    "cost": [
+     "Fire"
+    ],
+    "damage": 40,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Heat Tackle",
+    "cost": [
+     "Fire",
+     "Fire",
+     "Colorless"
+    ],
+    "damage": 160,
+    "mark": "",
+    "effects": [
+     {
+      "t": "recoil",
+      "amount": 30
+     }
+    ],
+    "text": "This Pokémon also does 30 damage to itself."
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh8/33.png",
+  "large": "https://images.pokemontcg.io/swsh8/33_hires.png"
+ },
+ {
+  "id": "swsh8-86",
+  "name": "Pikachu V",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 200,
+  "type": "Lightning",
+  "rule": "v",
+  "prize": 2,
+  "attacks": [
+   {
+    "name": "Tail Whap",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Thunderbolt",
+    "cost": [
+     "Lightning",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 100,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Rare Holo V",
+  "small": "https://images.pokemontcg.io/swsh8/86.png",
+  "large": "https://images.pokemontcg.io/swsh8/86_hires.png"
+ },
+ {
+  "id": "swsh8-91",
+  "name": "Shinx",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 50,
+  "type": "Lightning",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Gnaw",
+    "cost": [
+     "Lightning"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Electric Claws",
+    "cost": [
+     "Lightning",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh8/91.png",
+  "large": "https://images.pokemontcg.io/swsh8/91_hires.png"
+ },
+ {
+  "id": "swsh8-115",
+  "name": "Snubbull",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Psychic",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Headbutt",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Bite",
+    "cost": [
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Metal",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh8/115.png",
+  "large": "https://images.pokemontcg.io/swsh8/115_hires.png"
+ },
+ {
+  "id": "swsh8-134",
+  "name": "Primeape",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Mankey",
+  "hp": 100,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Gut Punch",
+    "cost": [
+     "Fighting"
+    ],
+    "damage": 30,
+    "mark": "+",
+    "effects": [
+     {
+      "t": "ifOppV",
+      "add": 60
+     }
+    ],
+    "text": "If your opponent's Active Pokémon is a Pokémon V, this attack does 60 more damage."
+   }
+  ],
+  "weak": "Psychic",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh8/134.png",
+  "large": "https://images.pokemontcg.io/swsh8/134_hires.png"
+ },
+ {
+  "id": "swsh8-135",
+  "name": "Geodude",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 80,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Rollout",
+    "cost": [
+     "Fighting"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Light Punch",
+    "cost": [
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 3,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh8/135.png",
+  "large": "https://images.pokemontcg.io/swsh8/135_hires.png"
+ },
+ {
+  "id": "swsh8-182",
+  "name": "Skarmory",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 120,
+  "type": "Metal",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Steel Wing",
+    "cost": [
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [
+     {
+      "t": "less",
+      "amount": 30
+     }
+    ],
+    "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+   },
+   {
+    "name": "Slicing Blade",
+    "cost": [
+     "Metal",
+     "Metal",
+     "Colorless"
+    ],
+    "damage": 110,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fire",
+  "resist": "Grass",
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh8/182.png",
+  "large": "https://images.pokemontcg.io/swsh8/182_hires.png"
+ },
+ {
+  "id": "swsh9-21",
+  "name": "Moltres",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 120,
+  "type": "Fire",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Inferno Wings",
+    "cost": [
+     "Fire"
+    ],
+    "damage": 20,
+    "mark": "+",
+    "effects": [
+     {
+      "t": "ifDamaged",
+      "add": 70
+     },
+     {
+      "t": "ignoreW"
+     }
+    ],
+    "text": "If this Pokémon has any damage counters on it, this attack does 70 more damage. This attack's damage isn't affected by Weakness."
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Rare Holo",
+  "small": "https://images.pokemontcg.io/swsh9/21.png",
+  "large": "https://images.pokemontcg.io/swsh9/21_hires.png"
+ },
+ {
+  "id": "swsh9-56",
+  "name": "Mewtwo",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 130,
+  "type": "Psychic",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Life Sucker",
+    "cost": [
+     "Psychic"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [
+     {
+      "t": "heal",
+      "amount": 20
+     }
+    ],
+    "text": "Heal 20 damage from this Pokémon."
+   },
+   {
+    "name": "Psyburn",
+    "cost": [
+     "Psychic",
+     "Psychic",
+     "Colorless"
+    ],
+    "damage": 110,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Darkness",
+  "resist": "Fighting",
+  "retreat": 2,
+  "rarity": "Rare",
+  "small": "https://images.pokemontcg.io/swsh9/56.png",
+  "large": "https://images.pokemontcg.io/swsh9/56_hires.png"
+ },
+ {
+  "id": "swsh9-96",
+  "name": "Aggron V",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 230,
+  "type": "Metal",
+  "rule": "v",
+  "prize": 2,
+  "attacks": [
+   {
+    "name": "Rock Slide",
+    "cost": [
+     "Metal",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 90,
+    "mark": "",
+    "effects": [
+     {
+      "t": "bench",
+      "amount": 30,
+      "scope": "two"
+     }
+    ],
+    "text": "This attack also does 30 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+   },
+   {
+    "name": "Merciless Strike",
+    "cost": [
+     "Metal",
+     "Colorless",
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 150,
+    "mark": "+",
+    "effects": [
+     {
+      "t": "ifOppDamaged",
+      "add": 150
+     }
+    ],
+    "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 150 more damage."
+   }
+  ],
+  "weak": "Fire",
+  "resist": "Grass",
+  "retreat": 4,
+  "rarity": "Rare Holo V",
+  "small": "https://images.pokemontcg.io/swsh9/96.png",
+  "large": "https://images.pokemontcg.io/swsh9/96_hires.png"
+ },
+ {
+  "id": "swsh9-97",
+  "name": "Aggron VMAX",
+  "sort": "pokemon",
+  "stage": "vmax",
+  "from": "Aggron V",
+  "hp": 330,
+  "type": "Metal",
+  "rule": "vmax",
+  "prize": 3,
+  "attacks": [
+   {
+    "name": "Cracking Stomp",
+    "cost": [
+     "Metal",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 150,
+    "mark": "",
+    "effects": [
+     {
+      "t": "millOpp",
+      "count": 1
+     }
+    ],
+    "text": "Discard the top card of your opponent's deck."
+   },
+   {
+    "name": "Max Take Down",
+    "cost": [
+     "Metal",
+     "Metal",
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 270,
+    "mark": "",
+    "effects": [
+     {
+      "t": "recoil",
+      "amount": 30
+     }
+    ],
+    "text": "This Pokémon also does 30 damage to itself."
+   }
+  ],
+  "weak": "Fire",
+  "resist": "Grass",
+  "retreat": 4,
+  "rarity": "Rare Holo VMAX",
+  "small": "https://images.pokemontcg.io/swsh9/97.png",
+  "large": "https://images.pokemontcg.io/swsh9/97_hires.png"
+ },
+ {
+  "id": "swsh10-19",
+  "name": "Rowlet",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 60,
+  "type": "Grass",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Jump On",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "+",
+    "effects": [
+     {
+      "t": "flipMore",
+      "add": 10
+     }
+    ],
+    "text": "Flip a coin. If heads, this attack does 10 more damage."
+   }
+  ],
+  "weak": "Fire",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh10/19.png",
+  "large": "https://images.pokemontcg.io/swsh10/19_hires.png"
+ },
+ {
+  "id": "swsh10-20",
+  "name": "Dartrix",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Rowlet",
+  "hp": 90,
+  "type": "Grass",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Flap",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Razor Wing",
+    "cost": [
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 60,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fire",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh10/20.png",
+  "large": "https://images.pokemontcg.io/swsh10/20_hires.png"
+ },
+ {
+  "id": "swsh10-60",
+  "name": "Ralts",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Psychic",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Teleportation Burst",
+    "cost": [
+     "Psychic"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [
+     {
+      "t": "switchSelf"
+     }
+    ],
+    "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+   }
+  ],
+  "weak": "Darkness",
+  "resist": "Fighting",
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh10/60.png",
+  "large": "https://images.pokemontcg.io/swsh10/60_hires.png"
+ },
+ {
+  "id": "swsh10-61",
+  "name": "Kirlia",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Ralts",
+  "hp": 90,
+  "type": "Psychic",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Teleportation Burst",
+    "cost": [
+     "Psychic"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [
+     {
+      "t": "switchSelf"
+     }
+    ],
+    "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+   }
+  ],
+  "weak": "Darkness",
+  "resist": "Fighting",
+  "retreat": 1,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh10/61.png",
+  "large": "https://images.pokemontcg.io/swsh10/61_hires.png"
+ },
+ {
+  "id": "swsh10-98",
+  "name": "Darkrai V",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 210,
+  "type": "Darkness",
+  "rule": "v",
+  "prize": 2,
+  "attacks": [
+   {
+    "name": "Wind of Darkness",
+    "cost": [
+     "Darkness",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Dark Void",
+    "cost": [
+     "Darkness",
+     "Darkness",
+     "Colorless"
+    ],
+    "damage": 130,
+    "mark": "",
+    "effects": [
+     {
+      "t": "status",
+      "status": "asleep"
+     }
+    ],
+    "text": "Your opponent's Active Pokémon is now Asleep."
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Rare Holo V",
+  "small": "https://images.pokemontcg.io/swsh10/98.png",
+  "large": "https://images.pokemontcg.io/swsh10/98_hires.png"
+ },
+ {
+  "id": "swsh11-1",
+  "name": "Oddish",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 50,
+  "type": "Grass",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Ram",
+    "cost": [
+     "Grass",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fire",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh11/1.png",
+  "large": "https://images.pokemontcg.io/swsh11/1_hires.png"
+ },
+ {
+  "id": "swsh11-2",
+  "name": "Gloom",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Oddish",
+  "hp": 80,
+  "type": "Grass",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Absorb",
+    "cost": [
+     "Grass",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [
+     {
+      "t": "heal",
+      "amount": 30
+     }
+    ],
+    "text": "Heal 30 damage from this Pokémon."
+   }
+  ],
+  "weak": "Fire",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh11/2.png",
+  "large": "https://images.pokemontcg.io/swsh11/2_hires.png"
+ },
+ {
+  "id": "swsh11-30",
+  "name": "Poliwag",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 60,
+  "type": "Water",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Splashing Dodge",
+    "cost": [
+     "Water"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [
+     {
+      "t": "protect",
+      "flip": true
+     }
+    ],
+    "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+   }
+  ],
+  "weak": "Lightning",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh11/30.png",
+  "large": "https://images.pokemontcg.io/swsh11/30_hires.png"
+ },
+ {
+  "id": "swsh11-31",
+  "name": "Poliwhirl",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Poliwag",
+  "hp": 90,
+  "type": "Water",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Light Punch",
+    "cost": [
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Double Smash",
+    "cost": [
+     "Water",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "×",
+    "effects": [
+     {
+      "t": "flipTimes",
+      "coins": 2,
+      "each": 50
+     }
+    ],
+    "text": "Flip 2 coins. This attack does 50 damage for each heads."
+   }
+  ],
+  "weak": "Lightning",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh11/31.png",
+  "large": "https://images.pokemontcg.io/swsh11/31_hires.png"
+ },
+ {
+  "id": "swsh11-35",
+  "name": "Horsea",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 50,
+  "type": "Water",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Reverse Thrust",
+    "cost": [
+     "Water"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [
+     {
+      "t": "switchSelf"
+     }
+    ],
+    "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+   }
+  ],
+  "weak": "Lightning",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh11/35.png",
+  "large": "https://images.pokemontcg.io/swsh11/35_hires.png"
+ },
+ {
+  "id": "swsh11-114",
+  "name": "Murkrow",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 60,
+  "type": "Darkness",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Peck",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Wing Attack",
+    "cost": [
+     "Darkness",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Lightning",
+  "resist": "Fighting",
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh11/114.png",
+  "large": "https://images.pokemontcg.io/swsh11/114_hires.png"
+ },
+ {
+  "id": "swsh12-19",
+  "name": "Growlithe",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 90,
+  "type": "Fire",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Flare",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Ram",
+    "cost": [
+     "Fire",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 3,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh12/19.png",
+  "large": "https://images.pokemontcg.io/swsh12/19_hires.png"
+ },
+ {
+  "id": "swsh12-21",
+  "name": "Ponyta",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Fire",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Take Down",
+    "cost": [
+     "Fire",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "",
+    "effects": [
+     {
+      "t": "recoil",
+      "amount": 10
+     }
+    ],
+    "text": "This Pokémon also does 10 damage to itself."
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh12/21.png",
+  "large": "https://images.pokemontcg.io/swsh12/21_hires.png"
+ },
+ {
+  "id": "swsh12-36",
+  "name": "Articuno",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 110,
+  "type": "Water",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Ice Wing",
+    "cost": [
+     "Water"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Wild Freeze",
+    "cost": [
+     "Water",
+     "Water"
+    ],
+    "damage": 70,
+    "mark": "",
+    "effects": [
+     {
+      "t": "recoil",
+      "amount": 50
+     },
+     {
+      "t": "status",
+      "status": "paralyzed"
+     }
+    ],
+    "text": "This Pokémon also does 50 damage to itself. Your opponent's Active Pokémon is now Paralyzed."
+   }
+  ],
+  "weak": "Metal",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Rare Holo",
+  "small": "https://images.pokemontcg.io/swsh12/36.png",
+  "large": "https://images.pokemontcg.io/swsh12/36_hires.png"
+ },
+ {
+  "id": "swsh12-104",
+  "name": "Golbat",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Zubat",
+  "hp": 70,
+  "type": "Darkness",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Bite",
+    "cost": [
+     "Darkness"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 0,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh12/104.png",
+  "large": "https://images.pokemontcg.io/swsh12/104_hires.png"
+ },
+ {
+  "id": "swsh12-111",
+  "name": "Sandile",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Darkness",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Bite",
+    "cost": [
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh12/111.png",
+  "large": "https://images.pokemontcg.io/swsh12/111_hires.png"
+ },
+ {
+  "id": "swsh12pt5-41",
+  "name": "Luxio",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Shinx",
+  "hp": 80,
+  "type": "Lightning",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Jumping Kick",
+    "cost": [
+     "Lightning"
+    ],
+    "damage": 0,
+    "mark": "",
+    "effects": [
+     {
+      "t": "snipe",
+      "amount": 30,
+      "bench": false
+     }
+    ],
+    "text": "This attack does 30 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+   },
+   {
+    "name": "Head Bolt",
+    "cost": [
+     "Lightning",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh12pt5/41.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/41_hires.png"
+ },
+ {
+  "id": "swsh12pt5-68",
+  "name": "Graveler",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Geodude",
+  "hp": 110,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Tackle",
+    "cost": [
+     "Fighting"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Boulder Crush",
+    "cost": [
+     "Fighting",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 70,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 4,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh12pt5/68.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/68_hires.png"
+ },
+ {
+  "id": "swsh12pt5-79",
+  "name": "Krokorok",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Sandile",
+  "hp": 90,
+  "type": "Darkness",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Bite",
+    "cost": [
+     "Darkness"
+    ],
+    "damage": 20,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Dredge Up",
+    "cost": [
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 0,
+    "mark": "",
+    "effects": [
+     {
+      "t": "millOpp",
+      "count": 3
+     }
+    ],
+    "text": "Discard the top 3 cards of your opponent's deck."
+   }
+  ],
+  "weak": "Grass",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh12pt5/79.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/79_hires.png"
+ },
+ {
+  "id": "swsh12pt5-87",
+  "name": "Aron",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Metal",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Ram",
+    "cost": [
+     "Metal"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Slight Intrusion",
+    "cost": [
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [
+     {
+      "t": "recoil",
+      "amount": 10
+     }
+    ],
+    "text": "This Pokémon also does 10 damage to itself."
+   }
+  ],
+  "weak": "Fire",
+  "resist": "Grass",
+  "retreat": 2,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh12pt5/87.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/87_hires.png"
+ },
+ {
+  "id": "swsh12pt5-152",
+  "name": "Grass Energy",
+  "sort": "energy",
+  "type": "Grass",
+  "small": "https://images.pokemontcg.io/swsh12pt5/152.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/152_hires.png"
+ },
+ {
+  "id": "swsh12pt5-153",
+  "name": "Fire Energy",
+  "sort": "energy",
+  "type": "Fire",
+  "small": "https://images.pokemontcg.io/swsh12pt5/153.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/153_hires.png"
+ },
+ {
+  "id": "swsh12pt5-154",
+  "name": "Water Energy",
+  "sort": "energy",
+  "type": "Water",
+  "small": "https://images.pokemontcg.io/swsh12pt5/154.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/154_hires.png"
+ },
+ {
+  "id": "swsh12pt5-155",
+  "name": "Lightning Energy",
+  "sort": "energy",
+  "type": "Lightning",
+  "small": "https://images.pokemontcg.io/swsh12pt5/155.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/155_hires.png"
+ },
+ {
+  "id": "swsh12pt5-156",
+  "name": "Psychic Energy",
+  "sort": "energy",
+  "type": "Psychic",
+  "small": "https://images.pokemontcg.io/swsh12pt5/156.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/156_hires.png"
+ },
+ {
+  "id": "swsh12pt5-157",
+  "name": "Fighting Energy",
+  "sort": "energy",
+  "type": "Fighting",
+  "small": "https://images.pokemontcg.io/swsh12pt5/157.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/157_hires.png"
+ },
+ {
+  "id": "swsh12pt5-158",
+  "name": "Darkness Energy",
+  "sort": "energy",
+  "type": "Darkness",
+  "small": "https://images.pokemontcg.io/swsh12pt5/158.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/158_hires.png"
+ },
+ {
+  "id": "swsh12pt5-159",
+  "name": "Metal Energy",
+  "sort": "energy",
+  "type": "Metal",
+  "small": "https://images.pokemontcg.io/swsh12pt5/159.png",
+  "large": "https://images.pokemontcg.io/swsh12pt5/159_hires.png"
+ },
+ {
+  "id": "swsh35-1",
+  "name": "Venusaur V",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 220,
+  "type": "Grass",
+  "rule": "v",
+  "prize": 2,
+  "attacks": [
+   {
+    "name": "Pollen Bomb",
+    "cost": [
+     "Grass",
+     "Grass",
+     "Colorless"
+    ],
+    "damage": 80,
+    "mark": "",
+    "effects": [
+     {
+      "t": "status",
+      "status": "asleep"
+     },
+     {
+      "t": "status",
+      "status": "poisoned"
+     }
+    ],
+    "text": "Your opponent's Active Pokémon is now Asleep and Poisoned."
+   },
+   {
+    "name": "Solar Typhoon",
+    "cost": [
+     "Grass",
+     "Grass",
+     "Grass",
+     "Colorless"
+    ],
+    "damage": 220,
+    "mark": "",
+    "effects": [
+     {
+      "t": "lock",
+      "attack": "Solar Typhoon"
+     }
+    ],
+    "text": "During your next turn, this Pokémon can't use Solar Typhoon."
+   }
+  ],
+  "weak": "Fire",
+  "resist": null,
+  "retreat": 3,
+  "rarity": "Rare Holo V",
+  "small": "https://images.pokemontcg.io/swsh35/1.png",
+  "large": "https://images.pokemontcg.io/swsh35/1_hires.png"
+ },
+ {
+  "id": "swsh35-24",
+  "name": "Machop",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Low Kick",
+    "cost": [
+     "Fighting"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Steady Punch",
+    "cost": [
+     "Fighting",
+     "Colorless"
+    ],
+    "damage": 20,
+    "mark": "+",
+    "effects": [
+     {
+      "t": "flipMore",
+      "add": 40
+     }
+    ],
+    "text": "Flip a coin. If heads, this attack does 40 more damage."
+   }
+  ],
+  "weak": "Psychic",
+  "resist": null,
+  "retreat": 2,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh35/24.png",
+  "large": "https://images.pokemontcg.io/swsh35/24_hires.png"
+ },
+ {
+  "id": "swsh35-25",
+  "name": "Machoke",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Machop",
+  "hp": 110,
+  "type": "Fighting",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Low Kick",
+    "cost": [
+     "Fighting"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Pummel",
+    "cost": [
+     "Fighting",
+     "Fighting",
+     "Colorless"
+    ],
+    "damage": 50,
+    "mark": "+",
+    "effects": [
+     {
+      "t": "flipMore",
+      "add": 70
+     }
+    ],
+    "text": "Flip a coin. If heads, this attack does 70 more damage."
+   }
+  ],
+  "weak": "Psychic",
+  "resist": null,
+  "retreat": 3,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh35/25.png",
+  "large": "https://images.pokemontcg.io/swsh35/25_hires.png"
+ },
+ {
+  "id": "swsh35-33",
+  "name": "Ekans",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 70,
+  "type": "Darkness",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Ram",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 10,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Tail Snap",
+    "cost": [
+     "Darkness",
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Common",
+  "small": "https://images.pokemontcg.io/swsh35/33.png",
+  "large": "https://images.pokemontcg.io/swsh35/33_hires.png"
+ },
+ {
+  "id": "swsh35-34",
+  "name": "Arbok",
+  "sort": "pokemon",
+  "stage": "stage1",
+  "from": "Ekans",
+  "hp": 120,
+  "type": "Darkness",
+  "rule": null,
+  "prize": 1,
+  "attacks": [
+   {
+    "name": "Sharp Fang",
+    "cost": [
+     "Colorless"
+    ],
+    "damage": 30,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Tail Snap",
+    "cost": [
+     "Darkness",
+     "Colorless"
+    ],
+    "damage": 70,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   }
+  ],
+  "weak": "Fighting",
+  "resist": null,
+  "retreat": 1,
+  "rarity": "Uncommon",
+  "small": "https://images.pokemontcg.io/swsh35/34.png",
+  "large": "https://images.pokemontcg.io/swsh35/34_hires.png"
+ },
+ {
+  "id": "swsh35-74",
+  "name": "Charizard VMAX",
+  "sort": "pokemon",
+  "stage": "vmax",
+  "from": "Charizard V",
+  "hp": 330,
+  "type": "Fire",
+  "rule": "vmax",
+  "prize": 3,
+  "attacks": [
+   {
+    "name": "Claw Slash",
+    "cost": [
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 100,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "G-Max Wildfire",
+    "cost": [
+     "Fire",
+     "Fire",
+     "Fire",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 300,
+    "mark": "",
+    "effects": [
+     {
+      "t": "discardSelf",
+      "count": 2,
+      "kind": null
+     }
+    ],
+    "text": "Discard 2 Energy from this Pokémon."
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 3,
+  "rarity": "Rare Rainbow",
+  "small": "https://images.pokemontcg.io/swsh35/74.png",
+  "large": "https://images.pokemontcg.io/swsh35/74_hires.png"
+ },
+ {
+  "id": "swsh35-79",
+  "name": "Charizard V",
+  "sort": "pokemon",
+  "stage": "basic",
+  "from": null,
+  "hp": 220,
+  "type": "Fire",
+  "rule": "v",
+  "prize": 2,
+  "attacks": [
+   {
+    "name": "Claw Slash",
+    "cost": [
+     "Colorless",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 80,
+    "mark": "",
+    "effects": [],
+    "text": ""
+   },
+   {
+    "name": "Fire Spin",
+    "cost": [
+     "Fire",
+     "Fire",
+     "Colorless",
+     "Colorless"
+    ],
+    "damage": 220,
+    "mark": "",
+    "effects": [
+     {
+      "t": "discardSelf",
+      "count": 2,
+      "kind": null
+     }
+    ],
+    "text": "Discard 2 Energy from this Pokémon."
+   }
+  ],
+  "weak": "Water",
+  "resist": null,
+  "retreat": 3,
+  "rarity": "Rare Secret",
+  "small": "https://images.pokemontcg.io/swsh35/79.png",
+  "large": "https://images.pokemontcg.io/swsh35/79_hires.png"
+ },
+ {
+  "id": "swsh45-60",
+  "name": "Professor's Research",
+  "sort": "supporter",
+  "effect": "research",
+  "text": "Discard your hand and draw 7 cards.",
+  "small": "https://images.pokemontcg.io/swsh45/60.png",
+  "large": "https://images.pokemontcg.io/swsh45/60_hires.png"
+ }
+]
