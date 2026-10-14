@@ -12,6 +12,8 @@ A fan project. Pokémon, the names on the cards and all the artwork on them belo
 2. **Take a deck.** Eight ready decks of sixty cards, each built round one kind of Pokémon. You can look through any of them before choosing.
 3. **Play.** Seven cards each, a Basic Pokémon in the Active Spot, up to five on the Bench, six Prize cards set aside, a coin for who goes first. Then turn by turn: draw, attach one Energy, evolve, play Trainer cards, retreat, attack.
 
+Before the first match a short sheet says how a match goes, and during it a coach in the bar over the hand says what can be done next and points at the card or button (`lib/coach.ts`). It only suggests what the rules allow, never plays for you, and can be switched off.
+
 A match that is interrupted is still on the table when the page is opened again. Nothing leaves the browser: there is no account and no server.
 
 ## The rules
@@ -125,6 +127,7 @@ lib/
   cards.ts, people.ts      reading them; the trainers and the mats
   words.ts                 everything said in Turkish
   fx.ts, sound.ts          what an attack looks like, and sounds like
+  coach.ts                 what the coach says at each step
   store.ts                 what the browser keeps
 scripts/
   flatten-segments.mjs     run after the build: puts the prefetch files where a plain file host is asked for them

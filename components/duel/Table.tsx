@@ -6,12 +6,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { cardById, deckById } from '@/lib/cards';
+import { advise } from '@/lib/coach';
 import { attackRefusal, BENCH, cardOf, forecast, isBasic, legal, PRIZES, retreatRefusal, topOf } from '@/lib/duel/game';
 import type { Action, Card, Event, Spot, Who } from '@/lib/duel/types';
 import { IMPACT, playFx } from '@/lib/fx';
 import { MAT_OF, trainerById } from '@/lib/people';
 import { sound } from '@/lib/sound';
-import { act, begin, clearTable, moverOf, rivalStep, standUp, useStore, type Beat } from '@/lib/store';
+import { act, begin, clearTable, moverOf, rivalStep, setTaught, standUp, toggleCoach, useStore, type Beat } from '@/lib/store';
 import { ASK, CONDITION, LEVEL, REFUSAL, says, TRAINER } from '@/lib/words';
 import { Pips, Stamp } from '../Bits';
 import { CardFace } from '../CardFace';
@@ -75,6 +76,8 @@ export function Table() {
   const rivalDeck = useStore((state) => state.rivalDeck);
   const slip = useStore((state) => state.slip);
   const beat = useStore((state) => state.beat);
+  const coachOn = useStore((state) => state.coach);
+  const taught = useStore((state) => state.taught);
   const [looking, setLooking] = useState<Card | null>(null);
   const [sel, setSel] = useState<number | null>(null);
   const [retreating, setRetreating] = useState(false);
@@ -156,6 +159,8 @@ export function Table() {
   const settingUp = prompt?.kind === 'setup';
   const flipped = [...beat.events].reverse().find((event) => event.t === 'flip');
   const strike = beat.live ? beat.events.find((event) => event.t === 'attack') : undefined;
+  const advice = coachOn && settled ? advise(game, held, first) : null;
+  const hinted = (control: NonNullable<NonNullable<typeof advice>['control']>, attack?: number) => (advice?.control === control && (attack === undefined || advice.attack === attack) ? '' : undefined);
 
   const go = (action: Action) => {
     setSel(null);
@@ -179,6 +184,7 @@ export function Table() {
     if (asked('own', spot)) return picked.includes(spot) ? 'picked' : 'open';
     if (typeof spot === 'number' && (prompt?.kind === 'promote' || (retreating && can({ do: 'retreat', to: spot })))) return 'open';
     if (held !== null && (can({ do: 'attach', hand: held, to: spot }) || can({ do: 'evolve', hand: held, to: spot }))) return 'open';
+    if (advice?.spots.includes(spot)) return 'hint';
     return null;
   };
   const onMySpot = (spot: Spot) => {
@@ -198,7 +204,7 @@ export function Table() {
   const sayingFor = (side: Who) => (spot: Spot) => {
     const mon = spot === 'active' ? view.players[side].active : view.players[side].bench[spot];
     const name = mon ? topOf(mon).name : 'Pokémon';
-    if (side === 0 ? myState(spot) : asked('opp', spot)) return `${name}: seç`;
+    if (side === 0 ? myState(spot) === 'open' || myState(spot) === 'picked' : asked('opp', spot)) return `${name}: seç`;
     return `${name} kartına yakından bak`;
   };
 
@@ -267,10 +273,14 @@ export function Table() {
         const refusal = attackRefusal(view, 0, index);
         const open = can({ do: 'attack', index });
         const guess = forecast(view, 0, index);
-        return { attack, index, open, why: mine && !prompt && !open && refusal ? REFUSAL[refusal] : null, guess };
+        const paid = Math.min(active.energy.length, attack.cost.length);
+        const missing = attack.cost.length - paid;
+        const why = mine && !prompt && !open && refusal ? (refusal === 'energy' && missing > 0 ? `${missing} Enerji daha gerekli.` : REFUSAL[refusal]) : null;
+        return { attack, index, open, why, guess, paid };
       })
     : [];
 
+  const nearest = attacks.filter((one) => one.why).sort((a, b) => a.attack.cost.length - a.paid - (b.attack.cost.length - b.paid))[0];
   const cardsPrompt = prompt?.kind === 'cards' ? prompt : null;
   const matLook = MAT_OF[myDeck?.type ?? 'Colorless'];
   /** How many Prize cards a side has taken; before the piles are set aside, none. */
@@ -323,12 +333,21 @@ export function Table() {
               // on a narrow table the attacks are chosen beside the Pokémon that makes them
               active && (
                 <>
-                  {attacks.map(({ attack, index, open }) => (
-                    <button key={attack.name} type="button" className="btn btn--small tag__attack" disabled={!open} onClick={() => go({ do: 'attack', index })}>
-                      <span>{attack.name}</span>
+                  {attacks.map(({ attack, index, open, why, paid }) => (
+                    <button key={attack.name} type="button" className="btn btn--small tag__attack" disabled={!open} data-hint={hinted('attack', index)} title={why ?? undefined} onClick={() => go({ do: 'attack', index })}>
+                      <span className="tag__attack-name">{attack.name}</span>
+                      <span className="tag__attack-cost">
+                        <Pips kinds={attack.cost} paid={paid} label={attack.cost.length ? undefined : 'Bedelsiz'} />
+                      </span>
                       <b className="fig">{attack.damage ? `${attack.damage}${attack.mark}` : '—'}</b>
                     </button>
                   ))}
+                  {mine && !prompt && !attacks.some((one) => one.open) && nearest?.why && (
+                    <p className="tag__note">
+                      {nearest.why}
+                      {nearest.why.includes('Enerji') ? ' Boş boncuklar eksik Enerji.' : ''}
+                    </p>
+                  )}
                   <button type="button" className="btn btn--line btn--small tag__attack" disabled={!canRetreat} aria-pressed={retreating} onClick={() => setRetreating((now) => !now)}>
                     <span>{retreating ? 'Vazgeç' : 'Geri çek'}</span>
                     <b className="fig">{topOf(active).retreat}</b>
@@ -350,7 +369,12 @@ export function Table() {
       <section className="hand" aria-label="Elin" data-setup={settingUp ? '' : undefined}>
         <div className="paper hand__bar">
           <p className="hand__say" aria-live="polite">
-            {settingUp ? (
+            {advice ? (
+              <>
+                <strong className="coach">Koç</strong> {advice.say}
+                {advice.why && <span className="coach__why">{advice.why}</span>}
+              </>
+            ) : settingUp ? (
               `Ortada: ${first.active === null ? '—' : cardOf(me.hand[first.active]).name}. Yedekte: ${first.bench.length}.`
             ) : heldCard ? (
               <>
@@ -370,6 +394,7 @@ export function Table() {
                 type="button"
                 className="btn btn--go btn--small"
                 disabled={first.active === null}
+                data-hint={hinted('ready')}
                 onClick={() => {
                   if (first.active === null) return;
                   const action: Action = { do: 'setup', active: first.active, bench: first.bench };
@@ -386,20 +411,35 @@ export function Table() {
               </button>
             )}
             {told?.act && (
-              <button type="button" className="btn btn--go btn--small" onClick={() => go(told.act!.action)}>
+              <button type="button" className="btn btn--go btn--small" data-hint={hinted(told.act.action.do === 'bench' ? 'bench' : 'play')} onClick={() => go(told.act!.action)}>
                 {told.act.label}
               </button>
             )}
+            {held !== null &&
+              options
+                .filter((option): option is Extract<Action, { do: 'attach' | 'evolve' }> => (option.do === 'attach' || option.do === 'evolve') && option.hand === held)
+                .map((option) => {
+                  const mon = option.to === 'active' ? me.active : me.bench[option.to];
+                  if (!mon) return null;
+                  return (
+                    <button key={`${option.do}-${option.to}`} type="button" className="btn btn--go btn--small" onClick={() => go(option)}>
+                      {option.do === 'attach' ? `${topOf(mon).name}${option.to === 'active' ? ' (ortada)' : ''}: bağla` : `${topOf(mon).name}: evrimleştir`}
+                    </button>
+                  );
+                })}
             {heldCard && (
               <button type="button" className="btn btn--line btn--small" onClick={() => setLooking(heldCard)}>
                 Yakından bak
               </button>
             )}
             {mine && !prompt && (
-              <button type="button" className="btn btn--small" disabled={!can({ do: 'end' })} onClick={() => go({ do: 'end' })}>
+              <button type="button" className="btn btn--small" disabled={!can({ do: 'end' })} data-hint={hinted('end')} onClick={() => go({ do: 'end' })}>
                 Turu bitir
               </button>
             )}
+            <button type="button" className="link hand__coach" aria-pressed={coachOn} onClick={toggleCoach}>
+              {coachOn ? 'Koçu kapat' : 'Koçu aç'}
+            </button>
           </div>
         </div>
         <ul className="hand__cards" style={{ '--n': Math.max(1, me.hand.length) } as CSSProperties}>
@@ -408,7 +448,7 @@ export function Table() {
             const chosen = settingUp ? (first.active === place ? 'Orta' : first.bench.includes(place) ? 'Yedek' : null) : null;
             const usable = settingUp ? isBasic(id) : options.some((option) => 'hand' in option && option.hand === place);
             return (
-              <li key={`${place}-${id}`} data-held={held === place ? '' : undefined} data-chosen={chosen ? '' : undefined} data-dull={mine && !usable ? '' : undefined}>
+              <li key={`${place}-${id}`} data-held={held === place ? '' : undefined} data-chosen={chosen ? '' : undefined} data-dull={mine && !usable ? '' : undefined} data-hint={advice?.hand.includes(place) && held !== place ? '' : undefined}>
                 <button type="button" className="handcard" onClick={() => onHand(place)} aria-pressed={settingUp ? chosen !== null : mine && !prompt ? held === place : undefined} aria-label={`${card.name}${chosen ? `, ${chosen.toLocaleLowerCase('tr')}` : ''}`}>
                   <CardFace card={card.sort === 'pokemon' ? { ...card, kind: card.type } : card} sizes="(min-width: 40rem) 6rem, 22vw" tilt={false} />
                   {chosen && <b className="handcard__tag">{chosen}</b>}
@@ -424,11 +464,11 @@ export function Table() {
         <h2 className="paper__head">Hamle fişi</h2>
         {active ? (
           <ul className="plays">
-            {attacks.map(({ attack, index, open, why, guess }) => (
+            {attacks.map(({ attack, index, open, why, guess, paid }) => (
               <li key={attack.name}>
-                <button type="button" className="play" disabled={!open} data-kind={active ? topOf(active).type : undefined} data-strong={guess.weak ? '' : undefined} onClick={() => go({ do: 'attack', index })}>
+                <button type="button" className="play" disabled={!open} data-kind={active ? topOf(active).type : undefined} data-strong={guess.weak ? '' : undefined} data-hint={hinted('attack', index)} onClick={() => go({ do: 'attack', index })}>
                   <span className="play__name">{attack.name}</span>
-                  <Pips kinds={attack.cost} label={attack.cost.length ? undefined : 'Bedelsiz'} />
+                  <Pips kinds={attack.cost} paid={paid} label={attack.cost.length ? undefined : 'Bedelsiz'} />
                   <span className="fig play__hit">
                     {attack.damage ? `${attack.damage}${attack.mark}` : '—'}
                     {(guess.weak || guess.resist) && guess.damage > 0 ? ` → ${guess.damage}` : ''}
@@ -450,7 +490,7 @@ export function Table() {
           <button type="button" className="btn btn--line btn--small" disabled={!canRetreat} aria-pressed={retreating} onClick={() => setRetreating((now) => !now)}>
             {retreating ? 'Vazgeç' : 'Geri çek'}
           </button>
-          <button type="button" className="btn btn--small" disabled={!can({ do: 'end' })} onClick={() => go({ do: 'end' })}>
+          <button type="button" className="btn btn--small" disabled={!can({ do: 'end' })} data-hint={hinted('end')} onClick={() => go({ do: 'end' })}>
             Turu bitir
           </button>
         </div>
@@ -497,11 +537,48 @@ export function Table() {
           >
             Maçı bırak
           </button>
+          <button type="button" className="link" onClick={() => setTaught(false)}>
+            Nasıl oynanır
+          </button>
           <Link className="link" href="/kurallar/">
             Kurallar
           </Link>
         </p>
       </aside>
+
+      {!taught && !over && (
+        <div className="verdict howto" role="dialog" aria-modal="false" aria-labelledby="howto-title">
+          <div className="paper verdict__slip howto__slip">
+            <p className="printed">Masaya oturmadan önce</p>
+            <h2 id="howto-title" className="howto__title">
+              Nasıl oynanır
+            </h2>
+            <ol className="howto__steps">
+              <li>
+                <strong>Amaç:</strong> rakibinin Pokémon’larını nakavt etmek. Her nakavt sana ödül kartı kazandırır; {PRIZES} ödülü ilk toplayan kazanır.
+              </li>
+              <li>
+                <strong>Masa:</strong> ortada bir Pokémon dövüşür, en çok beşi yedekte bekler. Ortadaki düşerse yerine yedekten biri geçer.
+              </li>
+              <li>
+                <strong>Enerji:</strong> saldırmak için Enerji gerekir. Elinden Enerji kartına dokun, sonra çıkan “bağla” düğmesine bas. Turda bir Enerji bağlanır.
+              </li>
+              <li>
+                <strong>Saldırı:</strong> saldırının yanındaki boncuklar bedelidir; hepsi dolunca düğme açılır. Saldırmak turu bitirir.
+              </li>
+            </ol>
+            <p className="verdict__kinds">Alttaki Koç her adımda ne yapabileceğini söyler ve ilgili kartı parlatır. İstersen kapatabilirsin.</p>
+            <div className="verdict__acts">
+              <button type="button" className="btn btn--go" onClick={() => setTaught(true)}>
+                Anladım
+              </button>
+              <Link className="btn btn--line" href="/kurallar/">
+                Bütün kurallar
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {over && settled && (
         <div className="verdict" role="dialog" aria-modal="false" aria-labelledby="verdict-title">

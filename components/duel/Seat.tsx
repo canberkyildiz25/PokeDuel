@@ -61,7 +61,7 @@ function Marks({ marks, uid }: { marks: Mark[]; uid: number }) {
 }
 
 /** A Pokémon lying in its place: the card on top, and under its edge the card it evolved from. */
-function MonView({ mon, small, shaken, fallen, marks, state, saying, onPress }: { mon: Mon; small: boolean; shaken: boolean; fallen: boolean; marks: Mark[]; state: 'open' | 'picked' | null; saying: string; onPress: () => void }) {
+function MonView({ mon, small, shaken, fallen, marks, state, saying, onPress }: { mon: Mon; small: boolean; shaken: boolean; fallen: boolean; marks: Mark[]; state: 'open' | 'picked' | 'hint' | null; saying: string; onPress: () => void }) {
   const top = topOf(mon);
   return (
     <motion.div className={small ? 'spot spot--small' : 'spot'} layoutId={`mon-${mon.uid}`} transition={TRAVEL} data-uid={mon.uid} data-shaken={shaken ? '' : undefined} data-fallen={fallen ? '' : undefined} data-deep={mon.cards.length > 1 ? '' : undefined} data-state={state ?? undefined} data-kind={top.type}>
@@ -111,7 +111,7 @@ export function Seat({
   /** The numbers of the Pokémon that have just been Knocked Out and are about to leave the mat. */
   fallen: number[];
   /** Whether a Pokémon is one of those being chosen between, or has been picked. */
-  stateOf: (spot: Spot) => 'open' | 'picked' | null;
+  stateOf: (spot: Spot) => 'open' | 'picked' | 'hint' | null;
   onSpot: (spot: Spot) => void;
   /** What pressing a Pokémon does, in words. */
   saying: (spot: Spot) => string;

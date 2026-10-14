@@ -53,6 +53,10 @@ interface State {
   beat: Beat;
   tally: Record<Level, { won: number; lost: number }>;
   sound: boolean;
+  /** Whether the coach says what can be done at each step. */
+  coach: boolean;
+  /** Whether the sheet that says how a match goes has been read. */
+  taught: boolean;
 }
 
 const EMPTY_SEAT: Seat = { trainer: null, level: 'easy', deck: null };
@@ -67,6 +71,8 @@ const fresh = (): State => ({
   beat: { n: 0, events: [], live: false },
   tally: { easy: { won: 0, lost: 0 }, steady: { won: 0, lost: 0 }, sharp: { won: 0, lost: 0 } },
   sound: true,
+  coach: true,
+  taught: false,
 });
 
 export const useStore = create<State>()(
@@ -77,7 +83,7 @@ export const useStore = create<State>()(
     skipHydration: true,
     // what an earlier version of the game kept is of no use to this one
     migrate: () => fresh(),
-    partialize: (state) => ({ seat: state.seat, rival: state.rival, rivalDeck: state.rivalDeck, game: state.game, slip: state.slip, tally: state.tally, sound: state.sound }),
+    partialize: (state) => ({ seat: state.seat, rival: state.rival, rivalDeck: state.rivalDeck, game: state.game, slip: state.slip, tally: state.tally, sound: state.sound, coach: state.coach, taught: state.taught }),
   }),
 );
 
@@ -100,6 +106,8 @@ export const sit = (trainer: string) => set((state) => ({ seat: { ...state.seat,
 export const setLevel = (level: Level) => set((state) => ({ seat: { ...state.seat, level } }));
 export const setDeck = (deck: string) => set((state) => ({ seat: { ...state.seat, deck } }));
 export const toggleSound = () => set((state) => ({ sound: !state.sound }));
+export const toggleCoach = () => set((state) => ({ coach: !state.coach }));
+export const setTaught = (taught: boolean) => set({ taught });
 export const seatReady = (seat: Seat) => Boolean(trainerById(seat.trainer)) && Boolean(deckById(seat.deck));
 
 /* ---------- the match ---------- */
