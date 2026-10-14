@@ -1,9 +1,9 @@
 import path from 'node:path';
 import type { NextConfig } from 'next';
 
-/* The address the site is served from: set by hand, or the one Vercel gives
-   the project, or this machine. */
-const site = process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000');
+/* The address the site is served from: set by hand (netlify.toml does), or
+   the one Netlify or Vercel gives the site, or this machine. */
+const site = process.env.NEXT_PUBLIC_SITE_URL ?? process.env.URL ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000');
 
 const config: NextConfig = {
   turbopack: { root: path.resolve(__dirname) },

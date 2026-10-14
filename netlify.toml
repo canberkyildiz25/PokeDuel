@@ -1,0 +1,16 @@
+# The site is a folder of files. Next.js exports it into out/, and the build
+# script then copies the prefetch files to the names a plain file host is
+# asked for (scripts/flatten-segments.mjs).
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_PUBLIC_SITE_URL = "https://pokedueltr.netlify.app"
+
+# what Next.js puts under _next/static never changes under the same name
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
